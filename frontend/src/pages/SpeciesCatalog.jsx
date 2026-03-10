@@ -62,7 +62,7 @@ const SpeciesCard = ({ bird }) => {
                 <audio
                     ref={audioRef}
                     preload="none"
-                    src={`http://localhost:8000/api/proxy/audio?url=${encodeURIComponent(bird.soundUrl)}`}
+                    src={``${import.meta.env.VITE_API_BASE_URL || ""}/api/proxy/audio?url=${encodeURIComponent(bird.soundUrl)}`}
                     onEnded={() => setPlaying(false)}
                     onError={() => setPlaying(false)}
                     className="hidden"
