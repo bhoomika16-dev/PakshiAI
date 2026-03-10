@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+.env
+*.db
+
+# Uploads / processed audio (runtime files)
+backend/uploads/
+backend/processed/
+
+# Large local asset archives (too big for Git)
+archive/
+archive (1)/
+archive*/
+
+# Scratch/debug scripts
+*.log
+extract_*.py
+fetch_*.py
+fix_*.py
+check_*.py
+debug_*.py
+brute_*.py
+final_*.py
+patch_*.py
+generate_*.py
+inspect_*.py
+diagnose_*.py
+list_*.py
+test_analyze.py
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+
+# IDE
+.vscode/

@@ -1,0 +1,152 @@
+{
+  "Ruddy Shelduck": {
+    "scientificName": "Tadorna ferruginea",
+    "conservationStatus": "Least Concern",
+    "trend": "Uncertain",
+    "migration": "Migratory-Local"
+  },
+  "White-Breasted Waterhen": {
+    "scientificName": "Amaurornis phoenicurus",
+    "conservationStatus": "Least Concern",
+    "trend": "Stable",
+    "migration": "Resident"
+  },
+  "Sarus Crane": {
+    "scientificName": "Antigone antigone",
+    "conservationStatus": "Vulnerable",
+    "trend": "Moderate Decline",
+    "migration": "Resident"
+  },
+  "Northern Lapwing": {
+    "scientificName": "Vanellus vanellus",
+    "conservationStatus": "Near Threatened",
+    "trend": "Data Deficient",
+    "migration": "Migratory-Long-Distance"
+  },
+  "Red-Wattled Lapwing": {
+    "scientificName": "Vanellus indicus",
+    "conservationStatus": "Least Concern",
+    "trend": "Stable",
+    "migration": "Resident"
+  },
+  "Cattle Egret": {
+    "scientificName": "Bubulcus ibis",
+    "conservationStatus": "Least Concern",
+    "trend": "Stable",
+    "migration": "Resident"
+  },
+  "Hoopoe": {
+    "scientificName": "Upupa epops",
+    "conservationStatus": "Least Concern",
+    "trend": "Moderate Decline",
+    "migration": "Resident"
+  },
+  "Indian Grey Hornbill": {
+    "scientificName": "Ocyceros birostris",
+    "conservationStatus": "Least Concern",
+    "trend": "Uncertain",
+    "migration": "Resident"
+  },
+  "Common Kingfisher": {
+    "scientificName": "Alcedo atthis",
+    "conservationStatus": "Least Concern",
+    "trend": "Stable",
+    "migration": "Resident"
+  },
+  "White-throated Kingfisher": {
+    "scientificName": "Halcyon smyrnensis",
+    "conservationStatus": "Least Concern",
+    "trend": "Stable",
+    "migration": "Resident"
+  },
+  "Green Bee-eater": {
+    "scientificName": "Merops orientalis",
+    "conservationStatus": "Least Concern",
+    "trend": "Stable",
+    "migration": "Resident"
+  },
+  "Indian Roller": {
+    "scientificName": "Coracias benghalensis",
+    "conservationStatus": "Least Concern",
+    "trend": "Stable",
+    "migration": "Resident"
+  },
+  "Brown-Headed Barbet": {
+    "scientificName": "Psilopogon zeylanicus",
+    "conservationStatus": "Least Concern",
+    "trend": "Uncertain",
+    "migration": "Resident"
+  },
+  "Indian Pitta": {
+    "scientificName": "Pitta brachyura",
+    "conservationStatus": "Least Concern",
+    "trend": "Uncertain",
+    "migration": "Migratory-Local"
+  },
+  "Rufous Treepie": {
+    "scientificName": "Dendrocitta vagabunda",
+    "conservationStatus": "Least Concern",
+    "trend": "Stable",
+    "migration": "Resident"
+  },
+  "Common Tailorbird": {
+    "scientificName": "Orthotomus sutorius",
+    "conservationStatus": "Least Concern",
+    "trend": "Stable",
+    "migration": "Resident"
+  },
+  "Jungle Babbler": {
+    "scientificName": "Turdoides striata",
+    "conservationStatus": "Least Concern",
+    "trend": "Stable",
+    "migration": "Resident"
+  },
+  "Forest Wagtail": {
+    "scientificName": "Dendronanthus indicus",
+    "conservationStatus": "Least Concern",
+    "trend": "Strong Decline",
+    "migration": "Migratory-Long-Distance"
+  },
+  "White Wagtail": {
+    "scientificName": "Motacilla alba",
+    "conservationStatus": "Least Concern",
+    "trend": "Moderate Decline",
+    "migration": "Migratory-Long-Distance"
+  },
+  "Common Rosefinch": {
+    "scientificName": "Carpodacus erythrinus",
+    "conservationStatus": "Least Concern",
+    "trend": "Uncertain",
+    "migration": "Migratory-Local"
+  },
+  "Common Myna": {
+    "scientificName": "Acridotheres tristis",
+    "conservationStatus": "Least Concern",
+    "trend": "Stable",
+    "migration": "Resident"
+  },
+  "Coppersmith Barbet": {
+    "scientificName": "Psilopogon haemacephalus",
+    "conservationStatus": "Least Concern",
+    "trend": "Stable",
+    "migration": "Resident"
+  },
+  "Gray Wagtail": {
+    "scientificName": "Motacilla cinerea",
+    "conservationStatus": "Least Concern",
+    "trend": "Uncertain",
+    "migration": "Migratory-Local"
+  },
+  "House Crow": {
+    "scientificName": "Corvus splendens",
+    "conservationStatus": "Least Concern",
+    "trend": "Moderate Increase",
+    "migration": "Resident"
+  },
+  "Indian Peafowl": {
+    "scientificName": "Pavo cristatus",
+    "conservationStatus": "Least Concern",
+    "trend": "Strong Increase",
+    "migration": "Resident"
+  }
+}

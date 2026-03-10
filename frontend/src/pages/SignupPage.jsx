@@ -1,0 +1,135 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Bird, Mail, Lock, User, CheckCircle, ArrowRight, Loader } from 'lucide-react';
+
+const SignupPage = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    const handleSignup = (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        // Simulate local registration
+        setTimeout(() => {
+            const userData = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                role: "New Observer"
+            };
+            localStorage.setItem('pakshiai_user', JSON.stringify(userData));
+
+            // ENSURE FRESH NULL STATE FOR NEW USER
+            localStorage.setItem('pakshiai_history', JSON.stringify([]));
+
+            setLoading(false);
+            setSuccess(true);
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+        }, 1500);
+    };
+
+    return (
+        <div className="min-h-screen bg-[#020817] flex items-center justify-center px-4 relative overflow-hidden">
+            <div className="absolute top-1/4 -right-20 w-80 h-80 bg-cyan-600/10 blur-[100px] rounded-full" />
+            <div className="absolute bottom-1/4 -left-20 w-80 h-80 bg-blue-600/10 blur-[100px] rounded-full" />
+
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="w-full max-w-md relative z-10"
+            >
+                <div className="bg-[#0a101f]/80 backdrop-blur-3xl border border-white/5 rounded-[40px] p-10 shadow-2xl">
+                    <div className="text-center mb-10">
+                        <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-blue-600/20">
+                            <Bird className="text-white w-8 h-8" />
+                        </div>
+                        <h2 className="text-3xl font-black text-white tracking-tighter uppercase mb-2">Create Profile</h2>
+                        <p className="text-blue-300/40 text-sm font-bold uppercase tracking-widest">Join the Global Repository</p>
+                    </div>
+
+                    {!success ? (
+                        <form onSubmit={handleSignup} className="space-y-6">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-blue-500/50 uppercase tracking-[0.2em] ml-2">Researcher Name</label>
+                                <div className="relative group">
+                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-hover:text-blue-500 transition-colors" size={20} />
+                                    <input
+                                        type="text"
+                                        required
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all font-medium"
+                                        placeholder="Dr. Aman Gupta"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-blue-500/50 uppercase tracking-[0.2em] ml-2">Email Identity</label>
+                                <div className="relative group">
+                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-hover:text-blue-500 transition-colors" size={20} />
+                                    <input
+                                        type="email"
+                                        required
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all font-medium"
+                                        placeholder="scientist@pakshiai.com"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-blue-500/50 uppercase tracking-[0.2em] ml-2">Security Key</label>
+                                <div className="relative group">
+                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-hover:text-blue-500 transition-colors" size={20} />
+                                    <input
+                                        type="password"
+                                        required
+                                        minLength={8}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all font-medium"
+                                        placeholder="Min. 8 characters"
+                                    />
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full bg-white text-blue-900 font-black uppercase tracking-[0.2em] py-5 rounded-2xl shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3"
+                            >
+                                {loading ? <Loader className="animate-spin" size={20} /> : <>Create Account <ArrowRight size={20} /></>}
+                            </button>
+                        </form>
+                    ) : (
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            className="bg-green-500/10 border border-green-500/20 p-10 rounded-[32px] text-center"
+                        >
+                            <CheckCircle size={64} className="text-green-500 mx-auto mb-6" />
+                            <h3 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">Access Granted</h3>
+                            <p className="text-green-400 font-bold uppercase text-[10px] tracking-[0.2em]">Profile Initialized with Null History</p>
+                        </motion.div>
+                    )}
+
+                    {!success && (
+                        <div className="mt-8 text-center text-white/20 text-xs font-bold uppercase tracking-widest">
+                            Already have a profile? <a href="/login" className="text-blue-500 hover:underline">Sign In</a>
+                        </div>
+                    )}
+                </div>
+            </motion.div>
+        </div>
+    );
+};
+
+export default SignupPage;

@@ -1,0 +1,102 @@
+{
+    "Asian Green Bee-Eater": {
+        "image_folder": "Asian Green Bee-Eater",
+        "sample_image": "ML100845971.jpg"
+    },
+    "Brown-Headed Barbet": {
+        "image_folder": "Brown-Headed Barbet",
+        "sample_image": "ML101410271.jpg"
+    },
+    "Cattle Egret": {
+        "image_folder": "Cattle Egret",
+        "sample_image": "ML102615511.jpg"
+    },
+    "Common Kingfisher": {
+        "image_folder": "Common Kingfisher",
+        "sample_image": "ML102292211.jpg"
+    },
+    "Common Myna": {
+        "image_folder": "Common Myna",
+        "sample_image": "ML101876201.jpg"
+    },
+    "Common Rosefinch": {
+        "image_folder": "Common Rosefinch",
+        "sample_image": "ML101683671.jpg"
+    },
+    "Common Tailorbird": {
+        "image_folder": "Common Tailorbird",
+        "sample_image": "ML100767561.jpg"
+    },
+    "Coppersmith Barbet": {
+        "image_folder": "Coppersmith Barbet",
+        "sample_image": "ML100312651.jpg"
+    },
+    "Forest Wagtail": {
+        "image_folder": "Forest Wagtail",
+        "sample_image": "ML100072911.jpg"
+    },
+    "Gray Wagtail": {
+        "image_folder": "Gray Wagtail",
+        "sample_image": "ML100275401.jpg"
+    },
+    "Hoopoe": {
+        "image_folder": "Hoopoe",
+        "sample_image": "ML100106251.jpg"
+    },
+    "House Crow": {
+        "image_folder": "House Crow",
+        "sample_image": "ML100356141.jpg"
+    },
+    "Indian Grey Hornbill": {
+        "image_folder": "Indian Grey Hornbill",
+        "sample_image": "ML100607991.jpg"
+    },
+    "Indian Peacock": {
+        "image_folder": "Indian Peacock",
+        "sample_image": "ML100366891.jpg"
+    },
+    "Indian Pitta": {
+        "image_folder": "Indian Pitta",
+        "sample_image": "ML100080251.jpg"
+    },
+    "Indian Roller": {
+        "image_folder": "Indian Roller",
+        "sample_image": "ML101880891.jpg"
+    },
+    "Jungle Babbler": {
+        "image_folder": "Jungle Babbler",
+        "sample_image": "ML101450601.jpg"
+    },
+    "Northern Lapwing": {
+        "image_folder": "Northern Lapwing",
+        "sample_image": "ML102222881.jpg"
+    },
+    "Red-Wattled Lapwing": {
+        "image_folder": "Red-Wattled Lapwing",
+        "sample_image": "ML101449691.jpg"
+    },
+    "Ruddy Shelduck": {
+        "image_folder": "Ruddy Shelduck",
+        "sample_image": "ML102015981.jpg"
+    },
+    "Rufous Treepie": {
+        "image_folder": "Rufous Treepie",
+        "sample_image": "ML103677381.jpg"
+    },
+    "Sarus Crane": {
+        "image_folder": "Sarus Crane",
+        "sample_image": "ML103190291.jpg"
+    },
+    "White Wagtail": {
+        "image_folder": "White Wagtail",
+        "sample_image": "ML103013411.jpg"
+    },
+    "White-Breasted Kingfisher": {
+        "image_folder": "White-Breasted Kingfisher",
+        "sample_image": "ML100151041.jpg"
+    },
+    "White-Breasted Waterhen": {
+        "image_folder": "White-Breasted Waterhen",
+        "sample_image": "ML100908141.jpg"
+    }
+}
