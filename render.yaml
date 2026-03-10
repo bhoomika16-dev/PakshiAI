@@ -6,4 +6,4 @@ services:
     startCommand: "cd backend && gunicorn app:app -w 4 -k uvicorn.workers.UvicornWorker"
     envVars:
       - key: PYTHON_VERSION
-        sync: false
+        value: 3.11.10
