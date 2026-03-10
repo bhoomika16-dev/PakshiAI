@@ -34,7 +34,7 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -49,11 +49,15 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # Note: Using absolute paths for robustness
 ROOT_DIR = os.path.dirname(BASE_DIR)
 ASSET_IMAGES_PATH = os.path.join(ROOT_DIR, "archive (1)", "training_set", "training_set")
+FALLBACK_IMAGES_PATH = os.path.join(BASE_DIR, "static_assets")
 ASSET_AUDIO_PATH = os.path.join(ROOT_DIR, "archive", "Voice of Birds", "Voice of Birds")
 
 if os.path.exists(ASSET_IMAGES_PATH):
     app.mount("/api/assets/images", StaticFiles(directory=ASSET_IMAGES_PATH), name="images")
     print(f"Mounted Research Images from: {ASSET_IMAGES_PATH}")
+elif os.path.exists(FALLBACK_IMAGES_PATH):
+    app.mount("/api/assets/images", StaticFiles(directory=FALLBACK_IMAGES_PATH), name="images")
+    print(f"Mounted Fallback Images from: {FALLBACK_IMAGES_PATH}")
 
 if os.path.exists(ASSET_AUDIO_PATH):
     app.mount("/api/assets/audio", StaticFiles(directory=ASSET_AUDIO_PATH), name="audio")

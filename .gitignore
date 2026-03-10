@@ -15,6 +15,9 @@ archive/
 archive (1)/
 archive*/
 
+# Allow specific assets for deployment
+!backend/static_assets/
+
 # Scratch/debug scripts
 *.log
 extract_*.py
