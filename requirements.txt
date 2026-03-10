@@ -2,7 +2,6 @@
 annotated-doc==0.0.4
 annotated-types==0.7.0
 anyio==4.12.1
-audioop-lts==0.2.2
 audioread==3.1.0
 bcrypt==5.0.0
 certifi==2026.1.4
@@ -63,9 +62,6 @@ six==1.17.0
 soundfile==0.13.1
 soxr==1.0.0
 SQLAlchemy==2.0.46
-standard-aifc==3.13.0
-standard-chunk==3.13.0
-standard-sunau==3.13.0
 starlette==0.52.1
 sympy==1.14.0
 threadpoolctl==3.6.0
