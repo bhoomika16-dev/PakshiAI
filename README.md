@@ -1,52 +1,57 @@
-# PakshiAI - Ecological Intelligence Platform
+# PakshiAI - Ecological Intelligence Platform 🦜
 
-## Overview
-PakshiAI is a research-grade, production-ready web application designed for the acoustic monitoring and classification of Indian avifauna. It leverages hybrid deep learning models, context-aware reasoning (seasonality, habitat), and interactive visualizations to provide a robust tool for researchers, conservationists, and bird enthusiasts.
+PakshiAI is a research-grade platform for the acoustic and visual monitoring of Indian avifauna. It combines deep learning models with contextual ecological data (habitat, seasonality) to provide highly accurate species identification.
 
-## Key Capabilities
-- **Acoustic Intelligence**: Standardizes audio, extracts Mel Spectrograms/MFCCs, and identifies species with confidence scores.
-- **Context Awareness**: Adjusts predictions based on geographic location, date (migration patterns), and habitat type.
-- **Interactive Visualization**: Real-time spectrogram rendering and detailed analysis reports.
-- **Biodiversity Analytics**: Aggregated dashboards showing species distribution and activity trends.
-- **Secure & Scalable**: REST API built with FastAPI, PostgreSQL/SQLite support, and React frontend.
+## 🚀 Unified Local Startup (Best Experience)
 
-## Technology Stack
-- **Frontend**: React, main, TailwindCSS, Recharts, Lucide Icons
-- **Backend**: FastAPI, Uvicorn, SQLAlchemy
-- **AI/ML Core**: Librosa (Audio Processing), Scikit-learn (Context logic), PyTorch (Inference - Mocked for demo)
-- **Database**: SQLite (Dev) / PostgreSQL (Prod)
-
-## Quick Start
+The project is now configured for a **single-command startup** on Windows. This will launch both the FastAPI backend and the React frontend simultaneously.
 
 ### Prerequisites
-- Node.js v18+
-- Python 3.10+
-- FFmpeg (for audio processing)
+- **Node.js**: [Download here](https://nodejs.org/)
+- **Python 3.10+**: Ensure it's in your PATH.
+- **FFmpeg**: Required for audio processing (standardize recordings).
 
-### Installation
+### Setup & Run
+1. **Initialize Dependencies** (Run once in the root folder):
+   ```powershell
+   npm install
+   ```
 
-1. **Clone & Setup Backend**
-```bash
-cd backend
-python -m venv venv
-.\venv\Scripts\activate
-pip install -r requirements.txt
-python -m uvicorn app:app --reload
-```
+2. **Start the Application**:
+   ```powershell
+   npm run dev
+   ```
+   - **Frontend**: [http://localhost:5173](http://localhost:5173)
+   - **Backend API**: [http://localhost:8000](http://localhost:8000)
 
-2. **Setup Frontend**
-```bash
-cd frontend
-npm install
-npm run dev
-```
+---
 
-3. **Access Application**
-Navigate to `http://localhost:5173`.
+## 📁 Project Structure & Assets
 
-## Documentation
-- [System Architecture](docs/ARCHITECTURE.md)
-- [API Reference](docs/API_TO_BE_GENERATED.md)
+### Folder Breakdown
+- `/frontend`: React + Vite application (UI, Charts, Species Catalog).
+- `/backend`: FastAPI server (Neural processing, Database, Asset mounting).
+- `/archive` & `/archive (1)`: **Local-only** high-resolution audio and image libraries (11.3GB total).
 
-## License
-MIT License - Conservation Technology Initiative
+### ⚠️ Important Note on Large Assets
+GitHub has a **100MB file limit** and a **2GB repository limit**. Because your `archive` folders contain over 11.3GB of data, they are **excluded from Git** (`.gitignore`) to prevent your account from being flagged or the push from failing.
+
+**To use the full catalog locally:**
+1. Keep your `archive` and `archive (1)` folders in the root directory.
+2. The backend is programmed to automatically detect and mount these folders to serve images/audio to the frontend.
+
+---
+
+## ☁️ Deployment Reference
+
+This project is optimized for Split-Deployment:
+- **Frontend**: Deploy the `frontend` folder to **Vercel**.
+- **Backend**: Deploy the `backend` folder to **Render**.
+
+*Note: In production, the app uses a lightweight fallback for images since the 11.3GB dataset is too large for free-tier hosting.*
+
+## 🛠️ Diagnostics
+If you encounter connection issues, check the browser console. The app will log `[PakshiAI] Initializing API client` with the current `baseURL` (linked to `VITE_API_BASE_URL` in production).
+
+---
+**License**: MIT - Conservation Technology Initiative
