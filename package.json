@@ -2,6 +2,10 @@
   "name": "pakshiai-root",
   "version": "1.0.0",
   "scripts": {
+    "dev": "concurrently \"cd backend && python app.py\" \"cd frontend && npm run dev\"",
     "build": "cd frontend && npm install && npm run build && cp -r dist ../dist"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
