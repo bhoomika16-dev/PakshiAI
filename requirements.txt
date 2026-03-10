@@ -49,8 +49,7 @@ pydantic_core==2.41.5
 pydub==0.25.1
 Pygments==2.19.2
 pytest==9.0.2
-python-dateutil==2.9.0
-.post0
+python-dateutil==2.9.0.post0
 python-dotenv==1.2.1
 python-jose==3.5.0
 python-multipart==0.0.22
@@ -70,14 +69,14 @@ standard-sunau==3.13.0
 starlette==0.52.1
 sympy==1.14.0
 threadpoolctl==3.6.0
-typing-inspection==0.4
-.2
+typing-inspection==0.4.2
 typing_extensions==4.15.0
 tzdata==2025.3
 urllib3==2.6.3
 uvicorn==0.40.0
 watchfiles==1.1.1
 websockets==16.0
+
 
 
 
