@@ -10,7 +10,7 @@ venv/
 backend/uploads/
 backend/processed/
 
-# Large local asset archives (too big for Git)
+# Large local asset archives (Excluded to avoid GitHub limits)
 archive/
 archive (1)/
 archive*/
