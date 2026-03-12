@@ -1,54 +1,52 @@
 # PakshiAI - Ecological Intelligence Platform 🦜
 
-PakshiAI is a research-grade platform for the acoustic and visual monitoring of Indian avifauna. It uses a high-performance **Machine Learning Architecture** where training and inference are strictly separated, allowing for efficient deployment and real-time identification.
+PakshiAI is a research-grade platform for the acoustic and visual monitoring of Indian avifauna. It uses a high-performance **Machine Learning Architecture** where training and inference are strictly separated, allowing for efficient local deployment and real-time identification.
 
-## 🚀 Optimized Workflow
+## 💻 Local Setup & Execution
 
-The project is designed to run efficiently without needing the original 11GB dataset at runtime.
+Follow these steps to get PakshiAI running on your local machine.
 
-### 1. Training (Development Only)
-If you have access to the full dataset (`archive` folders), you can train the models:
+### 1. Prerequisites
+- **Python 3.10+**: For the Neural Inference API.
+- **Node.js 18+**: For the React/Vite Frontend.
+- **FFmpeg**: (Required for Audio Hub) To process spectral signatures.
+  - *Windows*: `choco install ffmpeg` or download from [ffmpeg.org](https://ffmpeg.org).
+
+### 2. Initial Configuration
+One-time setup for the frontend environment:
 ```bash
-# Train Acoustic Model
-python training/train_acoustic_model.py
-# Train Visual Model
-python training/train_visual_model.py
-```
-This generates `.pth` weights and `.json` class maps in `backend/models/`.
-
-### 2. Asset Preparation
-Extract a minimal subset of assets for the Bird Catalog:
-```bash
-python scripts/prepare_deployment.py
+cd frontend
+cp .env.example .env
 ```
 
-### 3. Setup & Run (Localhost)
+### 3. Start the Application (Recommended)
+We provide an automated launcher for Windows users:  
+👉 **Double-click `start_local.bat`** in the project root.
 
-For the best experience, use the automated start script:
+This will automatically:
+- Install any missing Python dependencies.
+- Install Node.js dependencies.
+- Launch the **Backend API** (FastAPI) on [http://localhost:8000](http://localhost:8000).
+- Launch the **Frontend UI** (Vite) on [http://localhost:5173](http://localhost:5173).
 
-1. **Launch Automated Environment**:
-   Double-click `start_local.bat` in the project root. This will:
-   - Start the FastAPI Backend on [http://localhost:8000](http://localhost:8000)
-   - Install Frontend dependencies and start the Vite server on [http://localhost:5173](http://localhost:5173)
+### 4. Manual Startup
+If you prefer manual control:
+- **Backend**: `cd backend && pip install -r ../requirements.txt && uvicorn app:app --reload`
+- **Frontend**: `cd frontend && npm install && npm run dev`
 
-2. **Manual Startup**:
-   If you prefer manual control:
-   - **Backend**: `cd backend && uvicorn app:app --reload`
-   - **Frontend**: `cd frontend && npm install && npm run dev`
+---
 
-- **Visual ID**: http://localhost:5173/visual-id
-- **Acoustic Hub**: http://localhost:5173/acoustic-hub
-- **API Docs**: http://localhost:8000/docs
+## 📁 Project Features
+- **Acoustic Hub**: Neural spectral analysis for bird call identification.
+- **Visual ID**: Computer vision engine for plumage and anatomical marker decoding.
+- **Species Catalog**: A consolidated database of 31 Indian bird species with ecological context.
+- **Stand-alone Inference**: No need for the original 11GB dataset; uses optimized `.pth` weights.
 
-## 📁 Project Structure
-
-- `/training`: Offline training pipeline for Neural Cores.
+## 🛠 Project Structure
 - `/backend/core`: Production inference engines (Acoustic & Vision).
 - `/backend/models`: Serialized model weights and taxonomy mappings.
-- `/backend/static_assets/catalog`: High-performance subset of media for the Species Catalog.
-
-## ⚠️ Data & Privacy
-The 11.3GB raw dataset is **excluded from Git** to maintain performance. The backend operates purely as an **Inference Service** using pre-trained models. For production deployments, ensure the `backend/models` folder is included in your build.
+- `/frontend/src`: React application with TailwindCSS and Framer Motion.
+- `/scripts`: Utility scripts for data fetching and deployment prep.
 
 ---
 **License**: MIT - Conservation Technology Initiative

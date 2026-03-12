@@ -1,25 +1,24 @@
 @echo off
-echo Starting PakshiAI Full-Stack (Local Inference Mode)...
+setlocal
+echo =======================================================
+echo PakshiAI - Automated Local Intelligence Launch
+echo =======================================================
 
-:: Check for Python
-python --version >nul 2>&1
-if %errorlevel% neq 0 (
-    echo Error: Python is not installed or not in PATH.
-    pause
-    exit /b
-)
+:: 1. Backend Synchronization
+echo [1/3] Synchronizing Neural Inference Core...
+py -m pip install -r requirements.txt --quiet
 
-:: Start Backend
-echo Launching Backend API on http://localhost:8000...
-start cmd /k "cd backend && uvicorn app:app --reload --port 8000"
+:: 2. Launch Backend
+echo [2/3] Initializing FastAPI API Hub on http://localhost:8000...
+start "PakshiAI Backend" cmd /k "cd backend && py -m uvicorn app:app --host 127.0.0.1 --port 8000 --reload"
 
-:: Start Frontend
-echo Launching Frontend on http://localhost:5173...
-start cmd /k "cd frontend && npm install && npm run dev"
+:: 3. Launch Frontend
+echo [3/3] Deploying Vite Interface on http://localhost:5173...
+start "PakshiAI Frontend" cmd /k "cd frontend && npm install && npm run dev"
 
 echo.
-echo PakshiAI is now launching.
-echo Backend: http://localhost:8000
-echo Frontend: http://localhost:5173
+echo Launch sequence complete. 
+echo 🐦 Neural engines are synchronizing in the background windows.
 echo.
-pause
+echo Press any key to terminate this bridge...
+pause > nul
