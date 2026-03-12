@@ -23,18 +23,20 @@ from PIL import Image
 # Initialize Database
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="PakshiAI Backend", description="Ecological Intelligence Platform for Indian Avifauna")
+app = FastAPI(title="PakshiAI Backend", version="1.0.0")
 
-# CORS setup
+# Configure CORS for Cloud Deployment
+# Allow the frontend domain and localhost for dev
 origins = [
+    "https://pakshiai-frontend.onrender.com",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
+    allow_origins=["*"], # Keeping * for simplicity but ensuring it works
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -98,7 +100,9 @@ async def analyze_recording(
         features = AudioProcessor.extract_features(processed_path)
         
         # 5. ML Inference
+        print(f"ML Core: Initiating acoustic inference for {file_id}...")
         raw_predictions = MLEngine.predict(features)
+        print(f"ML Core: Inference complete. Extracted {len(raw_predictions)} candidates.")
         
         # 6. Contextual Adjustment
         adjusted_predictions = []
@@ -172,7 +176,9 @@ async def analyze_image(
             shutil.copyfileobj(file.file, buffer)
             
         # Neural Vision Inference
+        print(f"Vision Core: Initiating neural scan for {file_id}...")
         predictions = VisionEngine.predict(img_path)
+        print(f"Vision Core: Scan complete. Confidence mapping successful.")
         
         # Metadata Extraction
         with Image.open(img_path) as img:
@@ -256,6 +262,37 @@ def get_biodiversity_stats(db: Session = Depends(get_db)):
             {"region": "Western Desert", "species_count": random.randint(80, 150)},
             {"region": "Northeast Hills", "species_count": random.randint(200, 350)},
         ]
+    }
+
+@app.get("/api/health")
+async def health_check():
+    """
+    Diagnostic endpoint to verify ML model readiness and system health.
+    """
+    acoustic_status = "Loaded" if MLEngine._model is not None else "Not Loaded"
+    vision_status = "Loaded" if VisionEngine._model is not None else "Not Loaded"
+    
+    # Check if we have write access to uploads
+    try:
+        test_file = os.path.join(UPLOAD_DIR, "health_test.txt")
+        with open(test_file, "w") as f:
+            f.write("test")
+        os.remove(test_file)
+        storage_status = "Writable"
+    except Exception as e:
+        storage_status = f"Error: {str(e)}"
+
+    return {
+        "status": "online",
+        "engines": {
+            "acoustic": acoustic_status,
+            "vision": vision_status
+        },
+        "storage": storage_status,
+        "environment": {
+            "upload_dir": os.path.abspath(UPLOAD_DIR),
+            "catalog_assets": os.path.join(BASE_DIR, "static_assets", "catalog")
+        }
     }
 
 if __name__ == "__main__":
