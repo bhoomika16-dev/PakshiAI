@@ -25,6 +25,15 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="PakshiAI Backend", version="1.0.0")
 
+@app.on_event("startup")
+async def startup_event():
+    print("PakshiAI: Initializing Neural Engines...")
+    try:
+        MLEngine._load_resources()
+        VisionEngine._load_resources()
+    except Exception as e:
+        print(f"PakshiAI: Startup model loading failed: {e}")
+
 # Configure CORS for Cloud Deployment
 # Allow the frontend domain and localhost for dev
 origins = [
@@ -269,6 +278,20 @@ async def health_check():
     """
     Diagnostic endpoint to verify ML model readiness and system health.
     """
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    models_dir = os.path.join(base_path, 'models')
+    
+    diagnostic_models = {}
+    for model_file in ["acoustic_model.pth", "acoustic_classes.json", "vision_model.pth", "vision_classes.json"]:
+        p = os.path.join(models_dir, model_file)
+        exists = os.path.exists(p)
+        size = os.path.getsize(p) if exists else 0
+        diagnostic_models[model_file] = {
+            "exists": exists,
+            "size_kb": size // 1024,
+            "is_lfs_pointer": size < 1000 and exists # Pointers are usually < 1KB
+        }
+
     acoustic_status = "Loaded" if MLEngine._model is not None else "Not Loaded"
     vision_status = "Loaded" if VisionEngine._model is not None else "Not Loaded"
     
@@ -288,10 +311,12 @@ async def health_check():
             "acoustic": acoustic_status,
             "vision": vision_status
         },
+        "model_files": diagnostic_models,
         "storage": storage_status,
         "environment": {
             "upload_dir": os.path.abspath(UPLOAD_DIR),
-            "catalog_assets": os.path.join(BASE_DIR, "static_assets", "catalog")
+            "catalog_assets": os.path.join(BASE_DIR, "static_assets", "catalog"),
+            "models_dir": os.path.abspath(models_dir)
         }
     }
 
