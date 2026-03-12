@@ -3,9 +3,8 @@ services:
   - type: web
     name: pakshiai-backend
     env: python
-    rootDir: backend
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn app:app -w 1 -k uvicorn.workers.UvicornWorker"
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "gunicorn --chdir backend app:app -w 1 -k uvicorn.workers.UvicornWorker --timeout 300"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.10
