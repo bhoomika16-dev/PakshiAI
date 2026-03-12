@@ -14,7 +14,10 @@ from core.ml_engine import MLEngine
 from core.vision_engine import VisionEngine
 from core.audio_processor import AudioProcessor
 from core.context_engine import ContextEngine
-from utils.indianBirds import indianBirds
+from utils.indian_birds import indian_birds
+
+# Ensure backend/utils has an __init__.py if needed, or use a relative import
+# But since we added 'backend' to path, 'import utils.indian_birds' should work.
 
 # --- Page Configuration ---
 st.set_page_config(
@@ -71,7 +74,7 @@ with st.sidebar:
 
 # --- Utility Functions ---
 def get_species_info(common_name):
-    for bird in indianBirds:
+    for bird in indian_birds:
         if bird['name'] == common_name:
             return bird
     return None
@@ -182,7 +185,7 @@ elif app_mode == "Species Catalog":
     
     search_query = st.text_input("Search catalog...", "")
     
-    filtered_birds = [b for b in indianBirds if search_query.lower() in b['name'].lower() or search_query.lower() in b['scientificName'].lower()]
+    filtered_birds = [b for b in indian_birds if search_query.lower() in b['name'].lower() or search_query.lower() in b['scientificName'].lower()]
     
     for bird in filtered_birds[:10]:
         with st.container():
