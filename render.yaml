@@ -5,7 +5,7 @@ services:
     env: python
     rootDir: backend
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn app:app -w 4 -k uvicorn.workers.UvicornWorker"
+    startCommand: "gunicorn app:app -w 1 -k uvicorn.workers.UvicornWorker"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.10
