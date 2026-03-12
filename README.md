@@ -22,17 +22,23 @@ Extract a minimal subset of assets for the Bird Catalog:
 python scripts/prepare_deployment.py
 ```
 
-### 3. Setup & Run (Production/Inference)
-1. **Initialize Dependencies**:
-   ```powershell
-   npm install
-   ```
-2. **Start the Application**:
-   ```powershell
-   npm run dev
-   ```
-   - **Frontend**: [http://localhost:5173](http://localhost:5173)
-   - **Backend API**: [http://localhost:8000](http://localhost:8000)
+### 3. Setup & Run (Localhost)
+
+For the best experience, use the automated start script:
+
+1. **Launch Automated Environment**:
+   Double-click `start_local.bat` in the project root. This will:
+   - Start the FastAPI Backend on [http://localhost:8000](http://localhost:8000)
+   - Install Frontend dependencies and start the Vite server on [http://localhost:5173](http://localhost:5173)
+
+2. **Manual Startup**:
+   If you prefer manual control:
+   - **Backend**: `cd backend && uvicorn app:app --reload`
+   - **Frontend**: `cd frontend && npm install && npm run dev`
+
+- **Visual ID**: http://localhost:5173/visual-id
+- **Acoustic Hub**: http://localhost:5173/acoustic-hub
+- **API Docs**: http://localhost:8000/docs
 
 ## 📁 Project Structure
 
