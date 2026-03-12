@@ -22,8 +22,11 @@ class VisionEngine:
 
     @staticmethod
     def _load_resources():
-        base_path = os.path.dirname(__file__)
-        weight_path = os.path.join(base_path, 'vision_model.pth')
+        base_path = os.path.dirname(os.path.dirname(__file__))
+        models_dir = os.path.join(base_path, 'models')
+        weight_path = os.path.join(models_dir, 'vision_model.pth')
+        class_path = os.path.join(models_dir, 'vision_classes.json')
+        meta_path = os.path.join(os.path.dirname(__file__), 'taxonomy_metadata.json')
         
         # Get last modified time
         mtime = os.path.getmtime(weight_path) if os.path.exists(weight_path) else 0
@@ -33,15 +36,13 @@ class VisionEngine:
             print(f"Vision Engine: {'Initializing' if VisionEngine._model is None else 'Hot-reloading'} neural core...")
             try:
                 # Load classes
-                class_path = os.path.join(base_path, 'vision_classes.json')
                 if os.path.exists(class_path):
                     with open(class_path, 'r') as f:
                         VisionEngine._classes = json.load(f)
                 else:
                     VisionEngine._classes = []
 
-                # Load metadata
-                meta_path = os.path.join(base_path, 'taxonomy_metadata.json')
+                # Load metadata (stays in core/)
                 if os.path.exists(meta_path):
                     with open(meta_path, 'r') as f:
                         VisionEngine._metadata = json.load(f)
@@ -49,7 +50,7 @@ class VisionEngine:
                     VisionEngine._metadata = {}
 
                 # Initialize architecture
-                VisionEngine._model = models.mobilenet_v2(pretrained=True)
+                VisionEngine._model = models.mobilenet_v2(pretrained=False) # Skip pretraining as we load weights
                 num_ftrs = VisionEngine._model.classifier[1].in_features
                 VisionEngine._model.classifier[1] = nn.Sequential(
                     nn.Dropout(0.2),
@@ -59,6 +60,7 @@ class VisionEngine:
                 # Load trained weights
                 if os.path.exists(weight_path):
                     VisionEngine._model.load_state_dict(torch.load(weight_path, map_location=VisionEngine._device))
+                    print(f"Vision Engine: Weights loaded from {weight_path}")
                 
                 VisionEngine._model.to(VisionEngine._device)
                 VisionEngine._model.eval()

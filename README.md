@@ -1,22 +1,32 @@
 # PakshiAI - Ecological Intelligence Platform 🦜
 
-PakshiAI is a research-grade platform for the acoustic and visual monitoring of Indian avifauna. It combines deep learning models with contextual ecological data (habitat, seasonality) to provide highly accurate species identification.
+PakshiAI is a research-grade platform for the acoustic and visual monitoring of Indian avifauna. It uses a high-performance **Machine Learning Architecture** where training and inference are strictly separated, allowing for efficient deployment and real-time identification.
 
-## 🚀 Unified Local Startup (Best Experience)
+## 🚀 Optimized Workflow
 
-The project is now configured for a **single-command startup** on Windows. This will launch both the FastAPI backend and the React frontend simultaneously.
+The project is designed to run efficiently without needing the original 11GB dataset at runtime.
 
-### Prerequisites
-- **Node.js**: [Download here](https://nodejs.org/)
-- **Python 3.10+**: Ensure it's in your PATH.
-- **FFmpeg**: Required for audio processing (standardize recordings).
+### 1. Training (Development Only)
+If you have access to the full dataset (`archive` folders), you can train the models:
+```bash
+# Train Acoustic Model
+python training/train_acoustic_model.py
+# Train Visual Model
+python training/train_visual_model.py
+```
+This generates `.pth` weights and `.json` class maps in `backend/models/`.
 
-### Setup & Run
-1. **Initialize Dependencies** (Run once in the root folder):
+### 2. Asset Preparation
+Extract a minimal subset of assets for the Bird Catalog:
+```bash
+python scripts/prepare_deployment.py
+```
+
+### 3. Setup & Run (Production/Inference)
+1. **Initialize Dependencies**:
    ```powershell
    npm install
    ```
-
 2. **Start the Application**:
    ```powershell
    npm run dev
@@ -24,34 +34,15 @@ The project is now configured for a **single-command startup** on Windows. This 
    - **Frontend**: [http://localhost:5173](http://localhost:5173)
    - **Backend API**: [http://localhost:8000](http://localhost:8000)
 
----
+## 📁 Project Structure
 
-## 📁 Project Structure & Assets
+- `/training`: Offline training pipeline for Neural Cores.
+- `/backend/core`: Production inference engines (Acoustic & Vision).
+- `/backend/models`: Serialized model weights and taxonomy mappings.
+- `/backend/static_assets/catalog`: High-performance subset of media for the Species Catalog.
 
-### Folder Breakdown
-- `/frontend`: React + Vite application (UI, Charts, Species Catalog).
-- `/backend`: FastAPI server (Neural processing, Database, Asset mounting).
-- `/archive` & `/archive (1)`: **Local-only** high-resolution audio and image libraries (11.3GB total).
-
-### ⚠️ Important Note on Large Assets
-GitHub has a **100MB file limit** and a **2GB repository limit**. Because your `archive` folders contain over 11.3GB of data, they are **excluded from Git** (`.gitignore`) to prevent your account from being flagged or the push from failing.
-
-**To use the full catalog locally:**
-1. Keep your `archive` and `archive (1)` folders in the root directory.
-2. The backend is programmed to automatically detect and mount these folders to serve images/audio to the frontend.
-
----
-
-## ☁️ Deployment Reference
-
-This project is optimized for Split-Deployment:
-- **Frontend**: Deploy the `frontend` folder to **Vercel**.
-- **Backend**: Deploy the `backend` folder to **Render**.
-
-*Note: In production, the app uses a lightweight fallback for images since the 11.3GB dataset is too large for free-tier hosting.*
-
-## 🛠️ Diagnostics
-If you encounter connection issues, check the browser console. The app will log `[PakshiAI] Initializing API client` with the current `baseURL` (linked to `VITE_API_BASE_URL` in production).
+## ⚠️ Data & Privacy
+The 11.3GB raw dataset is **excluded from Git** to maintain performance. The backend operates purely as an **Inference Service** using pre-trained models. For production deployments, ensure the `backend/models` folder is included in your build.
 
 ---
 **License**: MIT - Conservation Technology Initiative

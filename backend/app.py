@@ -44,24 +44,24 @@ PROCESSED_DIR = "processed"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(PROCESSED_DIR, exist_ok=True)
 
-# Mount Research Assets for Species Catalog
+# Mount Research Assets for Species Catalog (Optimized Inference Mode)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# Note: Using absolute paths for robustness
-ROOT_DIR = os.path.dirname(BASE_DIR)
-ASSET_IMAGES_PATH = os.path.join(ROOT_DIR, "archive (1)", "training_set", "training_set")
+# New lightweight catalog assets
+CATALOG_ASSETS_PATH = os.path.join(BASE_DIR, "static_assets", "catalog")
 FALLBACK_IMAGES_PATH = os.path.join(BASE_DIR, "static_assets")
-ASSET_AUDIO_PATH = os.path.join(ROOT_DIR, "archive", "Voice of Birds", "Voice of Birds")
 
-if os.path.exists(ASSET_IMAGES_PATH):
-    app.mount("/api/assets/images", StaticFiles(directory=ASSET_IMAGES_PATH), name="images")
-    print(f"Mounted Research Images from: {ASSET_IMAGES_PATH}")
+# Mount Images
+if os.path.exists(os.path.join(CATALOG_ASSETS_PATH, "images")):
+    app.mount("/api/assets/images", StaticFiles(directory=os.path.join(CATALOG_ASSETS_PATH, "images")), name="images")
+    print(f"Mounted Optimized Catalog Images from: {os.path.join(CATALOG_ASSETS_PATH, 'images')}")
 elif os.path.exists(FALLBACK_IMAGES_PATH):
     app.mount("/api/assets/images", StaticFiles(directory=FALLBACK_IMAGES_PATH), name="images")
     print(f"Mounted Fallback Images from: {FALLBACK_IMAGES_PATH}")
 
-if os.path.exists(ASSET_AUDIO_PATH):
-    app.mount("/api/assets/audio", StaticFiles(directory=ASSET_AUDIO_PATH), name="audio")
-    print(f"Mounted Voice of Birds library from: {ASSET_AUDIO_PATH}")
+# Mount Audio
+if os.path.exists(os.path.join(CATALOG_ASSETS_PATH, "audio")):
+    app.mount("/api/assets/audio", StaticFiles(directory=os.path.join(CATALOG_ASSETS_PATH, "audio")), name="audio")
+    print(f"Mounted Optimized Catalog Audio from: {os.path.join(CATALOG_ASSETS_PATH, 'audio')}")
 
 @app.get("/")
 def read_root():

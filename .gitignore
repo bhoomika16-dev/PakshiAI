@@ -6,38 +6,36 @@ venv/
 .env
 *.db
 
-# Uploads / processed audio (runtime files)
+# Runtime Files (Root & Backend)
+uploads/
+processed/
 backend/uploads/
 backend/processed/
+backend/venv/
 
 # Large local asset archives (Excluded to avoid GitHub limits)
 archive/
 archive (1)/
 archive*/
 
-# Allow specific assets for deployment
+# ML Models and Catalog Assets (REQUIRED FOR PRODUCTION)
+!backend/models/
+!backend/models/*.pth
+!backend/models/*.json
 !backend/static_assets/
+!backend/static_assets/catalog/
 
-# Scratch/debug scripts
+# Logs and Research
+docs/logs/
 *.log
-extract_*.py
-fetch_*.py
-fix_*.py
-check_*.py
-debug_*.py
-brute_*.py
-final_*.py
-patch_*.py
-generate_*.py
-inspect_*.py
-diagnose_*.py
-list_*.py
-test_analyze.py
+
+# IDE & Misc
+.vscode/
+.DS_Store
+.antigravity/
+.python-version
 
 # Frontend
 frontend/node_modules/
 frontend/dist/
 frontend/.env.local
-
-# IDE
-.vscode/

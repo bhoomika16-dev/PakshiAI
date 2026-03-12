@@ -1,4 +1,5 @@
 services:
+  # Backend API
   - type: web
     name: pakshiai-backend
     env: python
@@ -8,3 +9,14 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.10
+
+  # Frontend Static Site
+  - type: static
+    name: pakshiai-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: "npm install && npm run build"
+    publishDir: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://pakshiai-backend.onrender.com
