@@ -1,6 +1,6 @@
 # PakshiAI - Ecological Intelligence Platform 🦜
 
-PakshiAI is a research-grade platform for the acoustic and visual monitoring of Indian avifauna. It uses a high-performance **Machine Learning Architecture** where training and inference are strictly separated, allowing for efficient local deployment and real-time identification.
+PakshiAI is a professional **Deep Learning project** utilizing **Convolutional Neural Networks (CNN)** for the acoustic and visual monitoring of Indian avifauna.
 
 ## 💻 Local Setup & Execution
 

@@ -199,4 +199,4 @@ elif app_mode == "Species Catalog":
             """, unsafe_allow_html=True)
 
 st.markdown("---")
-st.caption("PakshiAI v1.0.0-alpha | Powered by Neural Transformers")
+st.caption("PakshiAI v1.0.0-alpha | Powered by Deep Learning CNNs")

@@ -125,7 +125,7 @@ const VisualIDPage = () => {
                                     <Activity size={16} className="text-blue-500" /> Neural Processing Unit
                                 </h3>
                                 <p className="text-white/20 text-sm font-medium leading-relaxed">
-                                    Our vision core utilizes a custom-trained Transformer architecture optimized for avian taxonomy. Upload a clear photograph for maximum accuracy.
+                                    Our vision core utilizes a custom-trained **Convolutional Neural Network (CNN)** architecture optimized for avian taxonomy. Upload a clear photograph for maximum accuracy.
                                 </p>
                             </div>
 
