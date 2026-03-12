@@ -95,7 +95,9 @@ class MLEngine:
                 MLEngine._model.eval()
                 print("Acoustic Neural Core: Loaded successfully.")
         except Exception as e:
+            import traceback
             print(f"MLEngine: Resource loading failed: {e}")
+            traceback.print_exc()
 
     @staticmethod
     def predict(feature_data):
@@ -157,7 +159,9 @@ class MLEngine:
             return sorted(results, key=lambda x: x['confidence'], reverse=True)
 
         except Exception as e:
+            import traceback
             print(f"Acoustic Prediction error: {e}")
+            traceback.print_exc()
             return [{
                 "species_id": 0,
                 "common_name": "Signal processing error",

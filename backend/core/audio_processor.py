@@ -36,9 +36,11 @@ class AudioProcessor:
             # Bandpass filter (optional but good for filtering out wind/rumble < 200Hz)
             # Simple butterworth filter. Prevent fs/2 crash for low sample rates:
             nyquist = AudioProcessor.TARGET_SR / 2.0
-            high_cut = min(15000.0, nyquist - 1.0)
+            low_cut = 200.0
+            high_cut = min(10000.0, nyquist - 50.0) # More conservative margin
             
-            b, a = butter(4, [200, high_cut], btype='band', fs=AudioProcessor.TARGET_SR)
+            print(f"Audio Processor: Applying bandpass [{low_cut}Hz - {high_cut}Hz] with Nyquist {nyquist}Hz")
+            b, a = butter(4, [low_cut, high_cut], btype='band', fs=AudioProcessor.TARGET_SR)
             y_filtered = lfilter(b, a, y_trimmed)
 
             # Save processed file

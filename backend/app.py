@@ -277,10 +277,22 @@ async def health_check():
         p = os.path.join(models_dir, model_file)
         exists = os.path.exists(p)
         size = os.path.getsize(p) if exists else 0
+        
+        is_lfs = False
+        if exists and size < 2000: # LFS pointer files are typically small
+            try:
+                with open(p, 'r') as f:
+                    content = f.read(100) # Read first 100 bytes
+                    if "version https://git-lfs" in content:
+                        is_lfs = True
+            except Exception: # Catch any error during file read
+                pass
+
         diagnostic_models[model_file] = {
             "exists": exists,
             "size_kb": size // 1024,
-            "is_lfs_pointer": size < 1000 and exists # Pointers are usually < 1KB
+            "actual_size_bytes": size,
+            "is_lfs_pointer": is_lfs
         }
 
     acoustic_status = "Loaded" if MLEngine._model is not None else "Not Loaded"
