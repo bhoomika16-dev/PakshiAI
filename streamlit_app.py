@@ -7,20 +7,11 @@ from PIL import Image
 import tempfile
 import json
 
-# Add backend to path for core engines
-current_dir = os.path.dirname(os.path.abspath(__file__))
-backend_path = os.path.join(current_dir, 'backend')
-if backend_path not in sys.path:
-    sys.path.insert(0, backend_path)
-
-from core.ml_engine import MLEngine
-from core.vision_engine import VisionEngine
-from core.audio_processor import AudioProcessor
-from core.context_engine import ContextEngine
-from utils.indian_birds import indian_birds
-
-# Ensure backend/utils has an __init__.py if needed, or use a relative import
-# But since we added 'backend' to path, 'import utils.indian_birds' should work.
+from backend.core.ml_engine import MLEngine
+from backend.core.vision_engine import VisionEngine
+from backend.core.audio_processor import AudioProcessor
+from backend.core.context_engine import ContextEngine
+from backend.utils.indian_birds import indian_birds
 
 # --- Page Configuration ---
 st.set_page_config(

@@ -10,12 +10,15 @@ class AcousticNet(nn.Module):
         super(AcousticNet, self).__init__()
         self.conv = nn.Sequential(
             nn.Conv2d(1, 16, kernel_size=3, padding=1),
+            nn.BatchNorm2d(16),
             nn.ReLU(),
             nn.MaxPool2d(2),
             nn.Conv2d(16, 32, kernel_size=3, padding=1),
+            nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(2),
             nn.Conv2d(32, 64, kernel_size=3, padding=1),
+            nn.BatchNorm2d(64),
             nn.ReLU(),
             nn.AdaptiveMaxPool2d((8, 8))
         )
