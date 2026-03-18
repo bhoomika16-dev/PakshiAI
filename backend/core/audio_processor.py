@@ -12,45 +12,61 @@ class AudioProcessor:
     @staticmethod
     def standardize_audio(file_path: str, output_path: str, offset: float = 0, duration: float = 30) -> dict:
         """
-        Converts audio to mono, resamples to target SR, normalizes, and trims silence.
-        Limited to first 30s by default to prevent timeouts on long files.
-        Returns metadata about the processed file.
+        Optimized audio standardization using pydub/ffmpeg and soundfile.
+        Dramatically faster than librosa.load on limited CPUs.
         """
         try:
-            # Load audio with limit to prevent OOM/Timeout on massive files
-            # librosa.load is slow; using offset and duration helps
-            y, sr = librosa.load(file_path, sr=None, mono=True, offset=offset, duration=duration)
+            # 1. Use pydub to load and convert to target format (FAST using ffmpeg)
+            # This handles MP3, AAC, WAV, etc.
+            audio = pydub.AudioSegment.from_file(file_path)
             
-            # Text Resample
-            if sr != AudioProcessor.TARGET_SR:
-                y = librosa.resample(y, orig_sr=sr, target_sr=AudioProcessor.TARGET_SR)
+            # 2. Trim/Slice using pydub (very fast)
+            start_ms = int(offset * 1000)
+            end_ms = start_ms + int(duration * 1000)
+            audio = audio[start_ms:end_ms]
+            
+            # 3. Resample and Mono in one step (FAST)
+            audio = audio.set_frame_rate(AudioProcessor.TARGET_SR).set_channels(1)
+            
+            # 4. Export to a temporary wav for soundfile reading
+            temp_wav = output_path + ".temp.wav"
+            audio.export(temp_wav, format="wav")
+            
+            # 5. Load with soundfile (ULTRA FAST)
+            data, sr = sf.read(temp_wav)
+            
+            # Clean up temp file
+            if os.path.exists(temp_wav):
+                os.remove(temp_wav)
                 
             # Normalize
-            y = librosa.util.normalize(y)
+            data = data.astype(np.float32)
+            if np.max(np.abs(data)) > 0:
+                data = data / np.max(np.abs(data))
             
-            # Trim silence (energy based) - top_db=60 is common for clean recordings
-            y_trimmed, _ = librosa.effects.trim(y, top_db=60)
-            
-            # Bandpass filter (optional but good for filtering out wind/rumble < 200Hz)
-            nyquist = AudioProcessor.TARGET_SR / 2.0
-            low_cut = 200.0
-            high_cut = min(10000.0, nyquist - 50.0) 
-            
-            b, a = butter(4, [low_cut, high_cut], btype='band', fs=AudioProcessor.TARGET_SR)
-            y_filtered = lfilter(b, a, y_trimmed)
-
-            # Save processed file
-            sf.write(output_path, y_filtered, AudioProcessor.TARGET_SR)
+            # Save final processed file
+            sf.write(output_path, data, AudioProcessor.TARGET_SR)
             
             return {
-                "duration": len(y_filtered) / AudioProcessor.TARGET_SR,
+                "duration": len(data) / AudioProcessor.TARGET_SR,
                 "sample_rate": AudioProcessor.TARGET_SR,
                 "channels": 1,
                 "processed_path": output_path,
-                "data": y_filtered # Return data to avoid re-loading in next step
+                "data": data
             }
         except Exception as e:
-            raise ValueError(f"Error processing audio: {str(e)}")
+            print(f"PakshiAI: [Optimization Warning] Accelerated processing failed, falling back. Error: {e}")
+            # Fallback to librosa if something goes wrong with pydub
+            y, sr = librosa.load(file_path, sr=AudioProcessor.TARGET_SR, mono=True, offset=offset, duration=duration)
+            y = librosa.util.normalize(y)
+            sf.write(output_path, y, AudioProcessor.TARGET_SR)
+            return {
+                "duration": len(y) / AudioProcessor.TARGET_SR,
+                "sample_rate": AudioProcessor.TARGET_SR,
+                "channels": 1,
+                "processed_path": output_path,
+                "data": y
+            }
 
     @staticmethod
     def extract_features(audio_data: np.ndarray):

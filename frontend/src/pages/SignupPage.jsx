@@ -58,49 +58,57 @@ const SignupPage = () => {
                     </div>
 
                     {!success ? (
-                        <form onSubmit={handleSignup} className="space-y-6">
+                        <form onSubmit={handleSignup} className="space-y-4">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-blue-500/50 uppercase tracking-[0.2em] ml-2">Researcher Name</label>
+                                <label htmlFor="signup-name" className="text-xs font-black uppercase tracking-widest text-white/30 ml-1">Full Name</label>
                                 <div className="relative group">
-                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-hover:text-blue-500 transition-colors" size={20} />
+                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-500 transition-colors" size={18} />
                                     <input
+                                        id="signup-name"
+                                        name="name"
                                         type="text"
-                                        required
+                                        placeholder="Enter your name"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                        className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all font-medium"
-                                        placeholder="Dr. Aman Gupta"
+                                        className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all font-bold"
+                                        required
+                                        autoComplete="name"
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-blue-500/50 uppercase tracking-[0.2em] ml-2">Email Identity</label>
+                                <label htmlFor="signup-email" className="text-xs font-black uppercase tracking-widest text-white/30 ml-1">Email Address</label>
                                 <div className="relative group">
-                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-hover:text-blue-500 transition-colors" size={20} />
+                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-500 transition-colors" size={18} />
                                     <input
+                                        id="signup-email"
+                                        name="email"
                                         type="email"
-                                        required
+                                        placeholder="Enter your email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all font-medium"
-                                        placeholder="scientist@pakshiai.com"
+                                        className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all font-bold"
+                                        required
+                                        autoComplete="email"
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-blue-500/50 uppercase tracking-[0.2em] ml-2">Security Key</label>
+                                <label htmlFor="signup-password" className="text-xs font-black uppercase tracking-widest text-white/30 ml-1">Create Password</label>
                                 <div className="relative group">
-                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-hover:text-blue-500 transition-colors" size={20} />
+                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-500 transition-colors" size={18} />
                                     <input
+                                        id="signup-password"
+                                        name="password"
                                         type="password"
-                                        required
-                                        minLength={8}
+                                        placeholder="Enter secure password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all font-medium"
-                                        placeholder="Min. 8 characters"
+                                        className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all font-bold"
+                                        required
+                                        autoComplete="new-password"
                                     />
                                 </div>
                             </div>
