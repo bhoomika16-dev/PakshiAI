@@ -90,6 +90,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/api/cors-test")
+def cors_test():
+    return {"status": "ok", "message": "CORS preflight successful"}
+
+# Manual header injection for all responses as a fallback
+@app.middleware("http")
+async def add_cors_header(request: Request, call_next):
+    response = await call_next(request)
+    origin = request.headers.get("origin")
+    if origin and "netlify.app" in origin:
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        response.headers["Access-Control-Allow-Methods"] = "*"
+        response.headers["Access-Control-Allow-Headers"] = "*"
+    return response
+
 # --- Authentication Endpoints ---
 from passlib.context import CryptContext
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
