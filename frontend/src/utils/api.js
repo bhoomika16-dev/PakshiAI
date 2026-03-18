@@ -3,7 +3,7 @@ import axios from 'axios';
 const baseUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
 const api = axios.create({
     baseURL: baseUrl,
-    timeout: 60000, // 60s timeout for heavy ML processing
+    timeout: 120000, // 120s timeout for heavy ML processing
 });
 
 console.log("[PakshiAI] Initialized API client with baseURL:", baseUrl || "(Relative)");

@@ -94,10 +94,14 @@ async def analyze_recording(
             
         # 3. Audio Standardization (Preprocessing)
         processed_path = os.path.join(PROCESSED_DIR, f"{file_id}_proc.wav")
-        audio_meta = AudioProcessor.standardize_audio(raw_path, processed_path)
+        # Use provided segments or default to start
+        offset = segment_start if segment_start is not None else 0
+        duration = (segment_end - segment_start) if (segment_start is not None and segment_end is not None) else 30
         
-        # 4. Feature Extraction
-        features = AudioProcessor.extract_features(processed_path)
+        audio_meta = AudioProcessor.standardize_audio(raw_path, processed_path, offset=offset, duration=duration)
+        
+        # 4. Feature Extraction (Uses data already in memory from step 3)
+        features = AudioProcessor.extract_features(audio_meta.pop('data'))
         
         # 5. ML Inference
         print(f"ML Core: Initiating acoustic inference for {file_id}...")

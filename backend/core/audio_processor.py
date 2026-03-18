@@ -10,18 +10,16 @@ class AudioProcessor:
     TARGET_CHANNELS = 1 # Mono
     
     @staticmethod
-    def standardize_audio(file_path: str, output_path: str) -> dict:
+    def standardize_audio(file_path: str, output_path: str, offset: float = 0, duration: float = 30) -> dict:
         """
         Converts audio to mono, resamples to target SR, normalizes, and trims silence.
+        Limited to first 30s by default to prevent timeouts on long files.
         Returns metadata about the processed file.
         """
         try:
-            # Load audio (librosa handles many formats)
-            y, sr = librosa.load(file_path, sr=None, mono=False)
-            
-            # Convert to mono if necessary
-            if y.ndim > 1:
-                y = librosa.to_mono(y)
+            # Load audio with limit to prevent OOM/Timeout on massive files
+            # librosa.load is slow; using offset and duration helps
+            y, sr = librosa.load(file_path, sr=None, mono=True, offset=offset, duration=duration)
             
             # Text Resample
             if sr != AudioProcessor.TARGET_SR:
@@ -34,12 +32,10 @@ class AudioProcessor:
             y_trimmed, _ = librosa.effects.trim(y, top_db=60)
             
             # Bandpass filter (optional but good for filtering out wind/rumble < 200Hz)
-            # Simple butterworth filter. Prevent fs/2 crash for low sample rates:
             nyquist = AudioProcessor.TARGET_SR / 2.0
             low_cut = 200.0
-            high_cut = min(10000.0, nyquist - 50.0) # More conservative margin
+            high_cut = min(10000.0, nyquist - 50.0) 
             
-            print(f"Audio Processor: Applying bandpass [{low_cut}Hz - {high_cut}Hz] with Nyquist {nyquist}Hz")
             b, a = butter(4, [low_cut, high_cut], btype='band', fs=AudioProcessor.TARGET_SR)
             y_filtered = lfilter(b, a, y_trimmed)
 
@@ -50,17 +46,19 @@ class AudioProcessor:
                 "duration": len(y_filtered) / AudioProcessor.TARGET_SR,
                 "sample_rate": AudioProcessor.TARGET_SR,
                 "channels": 1,
-                "processed_path": output_path
+                "processed_path": output_path,
+                "data": y_filtered # Return data to avoid re-loading in next step
             }
         except Exception as e:
             raise ValueError(f"Error processing audio: {str(e)}")
 
     @staticmethod
-    def extract_features(file_path: str):
+    def extract_features(audio_data: np.ndarray):
         """
-        Extracts spectral features for visualization and inference.
+        Extracts spectral features for visualization and inference from memory.
         """
-        y, sr = librosa.load(file_path, sr=AudioProcessor.TARGET_SR)
+        sr = AudioProcessor.TARGET_SR
+        y = audio_data
         
         # Mel Spectrogram (Aligned with 5s segments and 22050Hz)
         y_5s = y[:5*sr] if len(y) > 5*sr else np.pad(y, (0, 5*sr - len(y)))
@@ -73,7 +71,7 @@ class AudioProcessor:
         # MFCC
         mfcc = librosa.feature.mfcc(S=log_mel_spec, n_mfcc=13)
         
-        # Spectral Centroid
+        # Spectral Centroid (Using the full audio_data segment provided)
         cent = librosa.feature.spectral_centroid(y=y, sr=sr)
         
         return {
