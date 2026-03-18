@@ -3,6 +3,13 @@
   command = "npm run build"
   publish = "dist"
 
+# Proxy API requests to Render backend to bypass CORS and env issues
+[[redirects]]
+  from = "/api/*"
+  to = "https://pakshiai-backend.onrender.com/api/:splat"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
