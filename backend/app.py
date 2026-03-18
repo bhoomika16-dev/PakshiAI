@@ -46,11 +46,20 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins, 
+    allow_origins=origins,
+    allow_origin_regex="https://.*\.netlify\.app", # Robust support for previews
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def log_request_origin(request: Request, call_next):
+    origin = request.headers.get("origin")
+    if origin:
+        print(f"PakshiAI: Incoming request from origin: {origin}")
+    response = await call_next(request)
+    return response
 
 UPLOAD_DIR = "uploads"
 PROCESSED_DIR = "processed"
