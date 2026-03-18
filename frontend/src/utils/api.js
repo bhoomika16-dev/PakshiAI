@@ -7,6 +7,19 @@ const api = axios.create({
 });
 
 console.log("[PakshiAI] Initialized API client with effective baseURL:", baseUrl || "(Netlify Proxy / Relative)");
+
+// Automated Diagnostic Heartbeat
+const checkCommunication = async () => {
+    try {
+        const response = await api.get('/api/cors-test');
+        console.log("[PakshiAI] ✅ Cloud communication synchronized:", response.data.message);
+    } catch (err) {
+        console.error("[PakshiAI] ❌ Cloud communication blocked by CORS or Network error.");
+        console.info("[PakshiAI] Fix: Try deleting VITE_API_BASE_URL from Netlify settings to use the built-in Proxy.");
+    }
+};
+checkCommunication();
+
 if (!baseUrl) {
     console.info("[PakshiAI] Using Netlify Proxy (30s limit). If analysis takes >30s, set VITE_API_BASE_URL to your Render URL.");
 } else {
