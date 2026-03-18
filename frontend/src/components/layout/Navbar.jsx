@@ -5,6 +5,10 @@ import { motion } from 'framer-motion';
 import clsx from 'clsx';
 
 const Navbar = () => {
+    const [user, setUser] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [newName, setNewName] = useState("");
+    const [scrolled, setScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const location = useLocation();
 
