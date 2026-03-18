@@ -44,23 +44,6 @@ origins = [
     "http://127.0.0.1:5173",
 ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_origin_regex="https://.*\.netlify\.app", # Robust support for previews
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-@app.middleware("http")
-async def log_request_origin(request: Request, call_next):
-    origin = request.headers.get("origin")
-    if origin:
-        print(f"PakshiAI: Incoming request from origin: {origin}")
-    response = await call_next(request)
-    return response
-
 UPLOAD_DIR = "uploads"
 PROCESSED_DIR = "processed"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -86,8 +69,26 @@ if os.path.exists(os.path.join(CATALOG_ASSETS_PATH, "audio")):
     print(f"Mounted Optimized Catalog Audio from: {os.path.join(CATALOG_ASSETS_PATH, 'audio')}")
 
 @app.get("/")
+@app.head("/")
 def read_root():
     return {"message": "PakshiAI Intelligence Engine Operational", "status": "active"}
+
+# Add CORS middleware LAST to ensure it is the OUTERMOST layer
+# (FastAPI executes middleware in reverse order of addition for requests)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://pakshi-ai.netlify.app",
+        "https://pakshi-ai.netlify.app/",
+        "https://pakshiai-frontend.onrender.com",
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_origin_regex="https://.*\.netlify\.app", 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # --- Authentication Endpoints ---
 from passlib.context import CryptContext
