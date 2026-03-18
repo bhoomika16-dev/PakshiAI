@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Bird, Mail, Lock, AlertTriangle, ArrowRight, Loader } from 'lucide-react';
+import api from '../utils/api';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -8,31 +9,32 @@ const LoginPage = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
         setLoading(true);
 
-        // Simulate Auth - Hardcoded for demo/dev purposes
-        setTimeout(() => {
-            if (email === "demo@pakshiai.com" && password === "pakshi123") {
-                const userData = {
-                    id: 1,
-                    name: "Field Researcher",
-                    email: email,
-                    role: "Explorer"
-                };
-                localStorage.setItem('pakshiai_user', JSON.stringify(userData));
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('password', password);
+
+        try {
+            // Use existing api instance from utils/api
+            const response = await api.post('/api/auth/login', formData);
+            
+            if (response.data.status === 'success') {
+                localStorage.setItem('pakshiai_user', JSON.stringify(response.data.user));
                 // ENSURE HISTORY IS NULL FOR FIRST LOGIN (If no previous history exists)
                 if (!localStorage.getItem('pakshiai_history')) {
                     localStorage.setItem('pakshiai_history', JSON.stringify([]));
                 }
                 window.location.href = '/';
-            } else {
-                setError("Invalid credentials. Try demo@pakshiai.com / pakshi123");
-                setLoading(false);
             }
-        }, 1500);
+        } catch (err) {
+            console.error("Login error:", err);
+            setError(err.response?.data?.detail || "Connection failed. Please check your credentials.");
+            setLoading(false);
+        }
     };
 
     return (

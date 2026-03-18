@@ -46,7 +46,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Keeping * for simplicity but ensuring it works
+    allow_origins=origins, 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -79,6 +79,54 @@ if os.path.exists(os.path.join(CATALOG_ASSETS_PATH, "audio")):
 @app.get("/")
 def read_root():
     return {"message": "PakshiAI Intelligence Engine Operational", "status": "active"}
+
+# --- Authentication Endpoints ---
+from passlib.context import CryptContext
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+@app.post("/api/auth/signup")
+async def signup(name: str = Form(...), email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
+    # Check if user already exists
+    db_user = db.query(models.User).filter(models.User.email == email).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    
+    # Create new user
+    hashed_password = pwd_context.hash(password)
+    new_user = models.User(
+        username=name,
+        email=email,
+        hashed_password=hashed_password
+    )
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    
+    return {
+        "status": "success",
+        "user": {
+            "id": new_user.id,
+            "name": new_user.username,
+            "email": new_user.email,
+            "role": "Field Researcher"
+        }
+    }
+
+@app.post("/api/auth/login")
+async def login(email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
+    db_user = db.query(models.User).filter(models.User.email == email).first()
+    if not db_user or not pwd_context.verify(password, db_user.hashed_password):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    
+    return {
+        "status": "success",
+        "user": {
+            "id": db_user.id,
+            "name": db_user.username,
+            "email": db_user.email,
+            "role": "Field Researcher"
+        }
+    }
 
 @app.post("/api/predict")
 async def analyze_recording(

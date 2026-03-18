@@ -16,3 +16,4 @@ fastapi
 uvicorn
 gunicorn
 python-multipart
+passlib[bcrypt]

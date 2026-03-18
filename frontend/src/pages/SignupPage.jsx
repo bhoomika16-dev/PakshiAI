@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Bird, Mail, Lock, User, CheckCircle, ArrowRight, Loader } from 'lucide-react';
+import api from '../utils/api';
 
 const SignupPage = () => {
     const [name, setName] = useState('');
@@ -9,29 +10,32 @@ const SignupPage = () => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
-    const handleSignup = (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        // Simulate local registration
-        setTimeout(() => {
-            const userData = {
-                id: Date.now(),
-                name: name,
-                email: email,
-                role: "New Observer"
-            };
-            localStorage.setItem('pakshiai_user', JSON.stringify(userData));
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('password', password);
 
-            // ENSURE FRESH NULL STATE FOR NEW USER
-            localStorage.setItem('pakshiai_history', JSON.stringify([]));
-
+        try {
+            const response = await api.post('/api/auth/signup', formData);
+            
+            if (response.data.status === 'success') {
+                localStorage.setItem('pakshiai_user', JSON.stringify(response.data.user));
+                localStorage.setItem('pakshiai_history', JSON.stringify([]));
+                setLoading(false);
+                setSuccess(true);
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1000);
+            }
+        } catch (err) {
+            console.error("Signup error:", err);
             setLoading(false);
-            setSuccess(true);
-            setTimeout(() => {
-                window.location.href = '/';
-            }, 1000);
-        }, 1500);
+            alert(err.response?.data?.detail || "Registration failed. This email might already be in use.");
+        }
     };
 
     return (
