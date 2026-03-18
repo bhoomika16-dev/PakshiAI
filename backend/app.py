@@ -25,6 +25,16 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="PakshiAI Backend", version="1.0.0")
 
+@app.on_event("startup")
+async def startup_event():
+    print("PakshiAI: Initializing Neural Engines on startup...")
+    try:
+        MLEngine._load_resources()
+        VisionEngine._load_resources()
+        print("PakshiAI: All engines primed and ready.")
+    except Exception as e:
+        print(f"PakshiAI: Startup engine warming failed: {e}")
+
 # Configure CORS for Cloud Deployment
 # Allow the frontend domain and localhost for dev
 origins = [

@@ -1,0 +1,39 @@
+﻿{
+    "status":  "online",
+    "engines":  {
+                    "acoustic":  "Not Loaded",
+                    "vision":  "Not Loaded"
+                },
+    "model_files":  {
+                        "acoustic_model.pth":  {
+                                                   "exists":  true,
+                                                   "size_kb":  4228,
+                                                   "actual_size_bytes":  4329649,
+                                                   "is_lfs_pointer":  false
+                                               },
+                        "acoustic_classes.json":  {
+                                                      "exists":  true,
+                                                      "size_kb":  0,
+                                                      "actual_size_bytes":  634,
+                                                      "is_lfs_pointer":  false
+                                                  },
+                        "vision_model.pth":  {
+                                                 "exists":  true,
+                                                 "size_kb":  9078,
+                                                 "actual_size_bytes":  9296331,
+                                                 "is_lfs_pointer":  false
+                                             },
+                        "vision_classes.json":  {
+                                                    "exists":  true,
+                                                    "size_kb":  0,
+                                                    "actual_size_bytes":  599,
+                                                    "is_lfs_pointer":  false
+                                                }
+                    },
+    "storage":  "Writable",
+    "environment":  {
+                        "upload_dir":  "/opt/render/project/src/backend/uploads",
+                        "catalog_assets":  "/opt/render/project/src/backend/static_assets/catalog",
+                        "models_dir":  "/opt/render/project/src/backend/models"
+                    }
+}

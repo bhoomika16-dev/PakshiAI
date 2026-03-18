@@ -6,9 +6,11 @@ const api = axios.create({
     timeout: 120000, // 120s timeout for heavy ML processing
 });
 
-console.log("[PakshiAI] Initialized API client with baseURL:", baseUrl || "(Relative)");
+console.log("[PakshiAI] Initialized API client with effective baseURL:", baseUrl || "(Netlify Proxy / Relative)");
 if (!baseUrl) {
-    console.warn("[PakshiAI] WARNING: No VITE_API_BASE_URL found. API calls will fail in production unless environment variables are set and the app is redeployed.");
+    console.info("[PakshiAI] Using Netlify Proxy (30s limit). If analysis takes >30s, set VITE_API_BASE_URL to your Render URL.");
+} else {
+    console.info("[PakshiAI] Using Direct Cloud API (120s limit). Ensure CORS is configured for your domain.");
 }
 
 
