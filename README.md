@@ -1,52 +1,186 @@
 # PakshiAI - Ecological Intelligence Platform 🦜
 
-PakshiAI is a professional **Deep Learning project** utilizing **Convolutional Neural Networks (CNN)** for the acoustic and visual monitoring of Indian avifauna.
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-05998b.svg)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-19.0-61dafb.svg)](https://reactjs.org/)
+[![Deep Learning](https://img.shields.io/badge/Arch-CNN-red.svg)](#technical-stack)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 💻 Local Setup & Execution
+**PakshiAI** is a professional-grade Ecological Intelligence system designed for the automated monitoring of Indian avifauna. By leveraging **Convolutional Neural Networks (CNN)**, the platform provides real-time acoustic and visual species identification, empowering conservationists and researchers with high-fidelity biodiversity data.
 
-Follow these steps to get PakshiAI running on your local machine.
+---
 
-### 1. Prerequisites
-- **Python 3.10+**: For the Neural Inference API.
-- **Node.js 18+**: For the React/Vite Frontend.
-- **FFmpeg**: (Required for Audio Hub) To process spectral signatures.
-  - *Windows*: `choco install ffmpeg` or download from [ffmpeg.org](https://ffmpeg.org).
+## 📖 Table of Contents
+- [Problem Statement](#-problem-statement)
+- [System Architecture](#️-system-architecture)
+- [Technical Stack](#-technical-stack)
+- [Features](#-features)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Configuration](#️-configuration)
+- [Roadmap](#-roadmap)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-### 2. Initial Configuration
-One-time setup for the frontend environment:
-```bash
-cd frontend
-cp .env.example .env
+---
+
+## 🌍 Problem Statement
+Avian species serve as critical bioindicators of ecosystem health. However, manual monitoring is labor-intensive, costly, and often prone to human error across vast Indian landscapes. 
+
+**PakshiAI** bridges this gap by providing an AI-driven, scalable solution. It transforms raw field captures (audio/images) into actionable intelligence, enabling:
+- **Rapid Biodiversity Assessment**: Identifying species in seconds, not hours.
+- **Digital Conservation Records**: Logging predictions with geospatial and habitat context.
+- **Public Engagement**: Making complex ornithological data accessible via a professional UI.
+
+---
+
+## 🏗️ System Architecture
+
+PakshiAI utilizes a **training-inference separation** strategy. While the research was conducted on an ~11GB dataset, the production environment is optimized for high-performance inference using serialized weights.
+
+```mermaid
+graph TD
+    subgraph "Frontend (React + Vite)"
+        UI[User Interface]
+        AH[Acoustic Hub]
+        VID[Visual ID]
+        CAT[Species Catalog]
+    end
+
+    subgraph "Backend (FastAPI)"
+        API[Inference API]
+        PROC[Audio Processor / librosa]
+        CORE[Neural Core / CNN]
+        DB[(Production SQLite)]
+    end
+
+    UI --> API
+    AH --> PROC
+    PROC --> CORE
+    VID --> CORE
+    CORE --> DB
+    CAT --> DB
 ```
 
-### 3. Start the Application (Recommended)
-We provide an automated launcher for Windows users:  
-👉 **Double-click `start_local.bat`** in the project root.
+---
 
-This will automatically:
-- Install any missing Python dependencies.
-- Install Node.js dependencies.
-- Launch the **Backend API** (FastAPI) on [http://localhost:8000](http://localhost:8000).
-- Launch the **Frontend UI** (Vite) on [http://localhost:5173](http://localhost:5173).
+## 🛠️ Technical Stack
 
-### 4. Manual Startup
-If you prefer manual control:
-- **Backend**: `cd backend && pip install -r ../requirements.txt && uvicorn app:app --reload`
-- **Frontend**: `cd frontend && npm install && npm run dev`
+### **Neural Core (Deep Learning)**
+- **Architecture**: Convolutional Neural Networks (CNN) optimized for spectral and pattern recognition.
+- **Inference**: PyTorch (CPU-Optimized).
+- **Processing**: Librosa (STFT, Mel-Spectrogram decomposition), NumPy, SciPy.
+
+### **Backend (Intelligence Engine)**
+- **Framework**: FastAPI (High-performance Async Python).
+- **Database**: SQLAlchemy (ORM) + SQLite (Production-ready logging).
+- **Server**: Uvicorn / Gunicorn.
+
+### **Frontend (Research Interface)**
+- **Framework**: React 19 + Vite (Next-gen bundling).
+- **Styling**: TailwindCSS (Modern utility-first system).
+- **Animations**: Framer Motion (Smooth UI state transitions).
+- **Visualization**: Recharts & Lucide.
 
 ---
 
-## 📁 Project Features
-- **Acoustic Hub**: Neural spectral analysis for bird call identification.
-- **Visual ID**: Computer vision engine for plumage and anatomical marker decoding.
-- **Species Catalog**: A consolidated database of 31 Indian bird species with ecological context.
-- **Stand-alone Inference**: No need for the original 11GB dataset; uses optimized `.pth` weights.
+## ✨ Features
 
-## 🛠 Project Structure
-- `/backend/core`: Production inference engines (Acoustic & Vision).
-- `/backend/models`: Serialized model weights and taxonomy mappings.
-- `/frontend/src`: React application with TailwindCSS and Framer Motion.
-- `/scripts`: Utility scripts for data fetching and deployment prep.
+### 🎧 Acoustic Hub
+Neural spectral analysis of bird calls. Upload field recordings to decode vocal signatures with detailed confidence intervals.
+> *Placeholder: [Acoustic Hub Dashboard Screenshot]*
+
+### 📸 Visual ID
+State-of-the-art computer vision engine for identifying species from field captures, focusing on plumage patterns and anatomical markers.
+> *Placeholder: [Visual ID Results Screenshot]*
+
+### 📚 Species Catalog
+A comprehensive encyclopedia of 31+ verified Indian avian species, including scientific nomenclature, frequency ranges, and ecological context.
+> *Placeholder: [Species Catalog Screenshot]*
+
+### 📊 Real-time Monitoring & Dashboard
+Visual telemetry tracking biodiversity trends, detection activity, and geospatial distribution.
 
 ---
-**License**: MIT - Conservation Technology Initiative
+
+## 🚀 Installation
+
+### **Prerequisites**
+- **Python 3.10+** (Inference Core)
+- **Node.js 18+** (Interface)
+- **FFmpeg** (Required for spectral audio processing)
+
+### **Step-by-Step Setup**
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/bhoomika16-dev/PakshiAI.git
+   cd PakshiAI
+   ```
+
+2. **Backend Setup**
+   ```bash
+   # We recommend using the provided automated launcher
+   # but for manual setup:
+   pip install -r requirements.txt
+   ```
+
+3. **Frontend Setup**
+   ```bash
+   cd frontend
+   cp .env.example .env
+   npm install
+   ```
+
+### **Running the Project (Local Research Mode)**
+For a professional experience on Windows, simply double-click:
+```powershell
+start_local.bat
+```
+*This launches the API and UI concurrently with automated dependency synchronization.*
+
+---
+
+## ⚙️ Configuration
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `VITE_API_BASE_URL` | Link to the FastAPI Backend | `http://localhost:8000` |
+| `DATABASE_URL` | SQLAlchemy Connection String | `sqlite:///./pakshiai.db` |
+
+The backend expects trained `.pth` models in `backend/models/`. These are automatically handled in the provided repository.
+
+---
+
+## 🗺️ Roadmap
+- [ ] **Mobile Integration**: Progressive Web App (PWA) for offline field use.
+- [ ] **Edge Deployment**: Porting CNN cores to TensorFlow Lite for ultra-low latency.
+- [ ] **Extended Repository**: Expanding to 100+ Western Ghats endemic species.
+- [ ] **Citizen Science API**: Allowing verified experts to contribute to dataset refinement.
+
+---
+
+## 🤝 Contributing
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create.
+
+1. **Fork** the Project
+2. Create your **Feature Branch** (`git checkout -b feature/AmazingFeature`)
+3. **Commit** your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a **Pull Request**
+
+---
+
+## 📜 License
+Distributed under the **MIT License**. See `LICENSE` for more information.
+
+---
+
+## 📞 Support & Contact
+**Project Maintainer**: [Bhoomikha](https://github.com/bhoomika16-dev)  
+**Project Link**: [https://github.com/bhoomika16-dev/PakshiAI](https://github.com/bhoomika16-dev/PakshiAI)  
+
+*For bug reports and feature requests, please use the [GitHub Issues](https://github.com/bhoomika16-dev/PakshiAI/issues) page.*
+
+---
+**PakshiAI** - *Conservation through Intelligence*
