@@ -213,9 +213,19 @@ const AudioInput = () => {
                         <div className="hidden md:block w-px h-24 bg-white/5" />
 
                         <div className="flex flex-col items-center gap-4">
-                            <input type="file" accept="audio/*" className="hidden" ref={fileInputRef} onChange={handleFileUpload} />
+                            <input 
+                                id="audio-file-upload"
+                                name="audio-file"
+                                type="file" 
+                                accept="audio/*" 
+                                className="hidden" 
+                                ref={fileInputRef} 
+                                onChange={handleFileUpload} 
+                            />
                             <button
+                                id="upload-trigger"
                                 onClick={() => fileInputRef.current.click()}
+                                aria-label="Upload bird audio file"
                                 className="w-32 h-32 rounded-[32px] bg-white/5 border border-white/5 hover:border-blue-500/50 flex flex-col items-center justify-center gap-3 transition-all group"
                             >
                                 <Music size={40} className="text-white/20 group-hover:text-blue-500 group-hover:scale-110 transition-all" />
@@ -265,8 +275,10 @@ const AudioInput = () => {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="bg-white/5 p-5 rounded-2xl border border-white/5 group hover:border-blue-500/30 transition-all">
-                                    <label className="text-[10px] font-black text-white/20 uppercase mb-3 block tracking-widest">Habitat Logic</label>
+                                    <label htmlFor="habitat-select" className="text-[10px] font-black text-white/20 uppercase mb-3 block tracking-widest">Habitat Logic</label>
                                     <select
+                                        id="habitat-select"
+                                        name="habitat"
                                         value={contextData.habitat}
                                         onChange={(e) => setContextData({ ...contextData, habitat: e.target.value })}
                                         className="w-full bg-transparent text-sm text-white focus:outline-none font-bold cursor-pointer"

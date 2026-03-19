@@ -10,6 +10,7 @@ import uuid
 import json
 import random
 import requests
+import gc
 from datetime import datetime
 
 from database import engine, Base, get_db
@@ -29,9 +30,18 @@ app = FastAPI(title="PakshiAI Backend", version="1.0.0")
 async def startup_event():
     print("PakshiAI: Initializing Neural Engines on startup...")
     try:
+        # Pre-warm ONLY the most used engine (Acoustic) to save RAM
         MLEngine._load_resources()
-        VisionEngine._load_resources()
-        print("PakshiAI: All engines primed and ready.")
+        print("Acoustic Neural Core: Loaded successfully.")
+        
+        # Lazy load vision core only on demand
+        # This keeps the initial footprint < 300MB
+        
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            
+        print("PakshiAI: Memory-efficient system primed.")
     except Exception as e:
         print(f"PakshiAI: Startup engine warming failed: {e}")
 

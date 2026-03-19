@@ -104,7 +104,15 @@ const VisualIDPage = () => {
                                             <span className="text-white/30 text-xs font-black uppercase tracking-widest">Deploy Image Frame</span>
                                         </>
                                     )}
-                                    <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
+                                    <input 
+                                        id="visual-file-upload"
+                                        name="visual-file"
+                                        type="file" 
+                                        className="hidden" 
+                                        accept="image/*" 
+                                        onChange={handleFileChange} 
+                                    />
+                                    <label htmlFor="visual-file-upload" className="sr-only">Upload bird image</label>
                                 </div>
                             </label>
 
