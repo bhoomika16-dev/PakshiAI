@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://pakshiai-backend-production.up.railway.app').replace(/\/$/, '');
 const api = axios.create({
     baseURL: baseUrl,
     timeout: 120000, // 120s timeout for heavy ML processing
