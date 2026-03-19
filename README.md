@@ -148,7 +148,7 @@ start_local.bat
 | `VITE_API_BASE_URL` | Link to the FastAPI Backend | `http://localhost:8000` |
 | `DATABASE_URL` | SQLAlchemy Connection String | `sqlite:///./pakshiai.db` |
 
-The backend expects trained `.pth` models in `backend/models/`. These are automatically handled in the provided repository.
+The backend handles all acoustic and visual analysis using serialized CNN weights. No login is required for field research.
 
 ---
 
@@ -156,7 +156,6 @@ The backend expects trained `.pth` models in `backend/models/`. These are automa
 - [ ] **Mobile Integration**: Progressive Web App (PWA) for offline field use.
 - [ ] **Edge Deployment**: Porting CNN cores to TensorFlow Lite for ultra-low latency.
 - [ ] **Extended Repository**: Expanding to 100+ Western Ghats endemic species.
-- [ ] **Citizen Science API**: Allowing verified experts to contribute to dataset refinement.
 
 ---
 
