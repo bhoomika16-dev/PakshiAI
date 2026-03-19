@@ -1,6 +1,14 @@
 import axios from 'axios';
 
-const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://pakshiai-backend-production.up.railway.app').replace(/\/$/, '');
+const RAILWAY_URL = 'https://pakshiai-backend-production.up.railway.app';
+const envUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+
+// FORCE RAILWAY Migration: If the environment is still pointing to Render, we override it to Railway for stability.
+const baseUrl = (envUrl.includes('render') || !envUrl) ? RAILWAY_URL : envUrl;
+
+if (envUrl.includes('render')) {
+    console.warn("[PakshiAI] ⚠️ Stale Render URL detected in environment. Hard-syncing to Railway Production...");
+}
 const api = axios.create({
     baseURL: baseUrl,
     timeout: 120000, // 120s timeout for heavy ML processing
