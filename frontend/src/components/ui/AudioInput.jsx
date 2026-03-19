@@ -151,28 +151,6 @@ const AudioInput = () => {
         }
     };
 
-    const [user, setUser] = useState(null);
-    useEffect(() => {
-        const saved = localStorage.getItem('pakshiai_user');
-        if (saved) setUser(JSON.parse(saved));
-    }, []);
-
-    if (!user) {
-        return (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-2xl mx-auto bg-white/5 backdrop-blur-3xl rounded-[40px] p-16 border border-white/5 shadow-2xl text-center flex flex-col items-center gap-8">
-                <div className="w-24 h-24 bg-blue-500/10 rounded-full flex items-center justify-center mb-2 animate-pulse">
-                    <Zap size={48} className="text-blue-500" />
-                </div>
-                <div>
-                    <h3 className="text-3xl font-black text-white mb-3 uppercase tracking-tighter">Authorization Required</h3>
-                    <p className="text-blue-300/40 font-medium text-lg leading-relaxed px-4">Our advanced acoustic intelligence requires an active researcher profile to track ecological metadata.</p>
-                </div>
-                <a href="/login" className="px-12 py-5 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-black uppercase tracking-[0.2em] transition-all shadow-xl shadow-blue-600/20 active:scale-95">
-                    Sign In to Continue
-                </a>
-            </motion.div>
-        );
-    }
 
     return (
         <div className="w-full relative group">
