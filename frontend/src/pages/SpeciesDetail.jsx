@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, Volume2, MapPin, Feather, Activity, Globe, Info, ExternalLink, BookOpen, Radio, Layers, Clock, ShieldCheck, Share2, Play, Pause } from 'lucide-react';
 import { indianBirds, conservationStatusMap } from '../utils/indianBirds';
+import { baseUrl } from '../utils/api';
 import clsx from 'clsx';
 
 const FALLBACK = "https://cdn.pixabay.com/photo/2017/02/07/16/47/kingfisher-2046453_640.jpg";
@@ -151,7 +152,7 @@ const SpeciesDetail = () => {
                                 <audio
                                     ref={audioRef}
                                     preload="none"
-                                    src={`${import.meta.env.VITE_API_BASE_URL || ""}/api/proxy/audio?url=${encodeURIComponent(bird.soundUrl)}`}
+                                    src={`${baseUrl}/api/proxy/audio?url=${encodeURIComponent(bird.soundUrl)}`}
                                     onEnded={() => setIsPlaying(false)}
                                     onError={() => {
                                         console.error("Audio playback error");
