@@ -10,9 +10,10 @@ class VisionEngine:
     _model = None
     _metadata = None
     _alignment = {
-        "Indian Peacock": "Indian Peafowl",
+        "Indian Peacock": "Indian Peacock",
         "White-Breasted Kingfisher": "White-throated Kingfisher",
         "Asian Green Bee-Eater": "Green Bee-eater",
+        "White-Breasted Waterhen": "White-Breasted Waterhen",
         "Indian Grey Hornbill": "Indian Grey Hornbill",
         "Brown-Headed Barbet": "Brown-Headed Barbet",
         "Red-Wattled Lapwing": "Red-Wattled Lapwing",

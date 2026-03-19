@@ -39,7 +39,11 @@ const AnalysisResult = ({ result, onClose }) => {
 
     if (!activePrediction) return null;
 
-    const matchedBird = indianBirds.find(b => b.commonName.toLowerCase() === activePrediction.common_name?.toLowerCase());
+    const normalize = (s) => (s || "").toLowerCase().replace(/[\s-]/g, '');
+    const matchedBird = indianBirds.find(b => 
+        normalize(b.commonName) === normalize(activePrediction.common_name) ||
+        normalize(b.scientificName) === normalize(activePrediction.scientific_name)
+    );
     const isInconclusive = activePrediction.common_name?.toLowerCase().includes("inconclusive") || (activePrediction.confidence < 0.1 && result.metadata?.type === 'visual');
 
     const handleConfirm = () => {
