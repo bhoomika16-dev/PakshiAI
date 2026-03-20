@@ -71,6 +71,10 @@ Leverages **MobileNetV2** for plumage and anatomical descriptor extraction.
 > ![Visual ID Input](docs/visual_idip.png)
 > ![Visual ID Output](docs/visual_idop.png)
 
+### 📚 Field Repository (History Tracker)
+A persistent log of all avian detections and field observations, enabling researchers to review previous acoustic and visual identification commits.
+> ![History Tracker](docs/history_tracker.png)
+
 ### 📊 Insight Engine (Dashboard)
 Live telemetry visualizing biodiversity trends, regional detection hotspots, and IUCN conservation distribution.
 > ![Insights Engine](docs/insight_engine.png)
