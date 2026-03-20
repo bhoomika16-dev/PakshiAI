@@ -1,185 +1,149 @@
-# PakshiAI - Ecological Intelligence Platform 🦜
+# PakshiAI - Automated Avifauna Intelligence Platform 🦜🚀
 
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-05998b.svg)](https://fastapi.tiangolo.com/)
-[![React](https://img.shields.io/badge/React-19.0-61dafb.svg)](https://reactjs.org/)
-[![Deep Learning](https://img.shields.io/badge/Arch-CNN-red.svg)](#technical-stack)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Production Backend](https://img.shields.io/badge/Production-Railway-0b0d0e.svg)](https://railway.app/)
+[![Frontend](https://img.shields.io/badge/Frontend-Netlify-00ad9f.svg)](https://netlify.com/)
+[![Neural Core](https://img.shields.io/badge/ML--Core-PyTorch-ee4c2c.svg)](#technical-stack)
+[![FastAPI](https://img.shields.io/badge/API-FastAPI-05998b.svg)](https://fastapi.tiangolo.com/)
 
-**PakshiAI** is a professional-grade Ecological Intelligence system designed for the automated monitoring of Indian avifauna. By leveraging **Convolutional Neural Networks (CNN)**, the platform provides real-time acoustic and visual species identification, empowering conservationists and researchers with high-fidelity biodiversity data.
-
----
-
-## 📖 Table of Contents
-- [Problem Statement](#-problem-statement)
-- [System Architecture](#️-system-architecture)
-- [Technical Stack](#-technical-stack)
-- [Features](#-features)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [Configuration](#️-configuration)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-- [License](#-license)
+**PakshiAI** is an industrial-grade Ecological Intelligence system designed for the high-fidelity monitoring of Indian avian species. Utilizing state-of-the-art **Convolutional Neural Networks (CNN)**, the platform provides real-time acoustic vocalization analysis and visual pattern recognition, bridging the gap between field observation and structured biological data.
 
 ---
 
-## 🌍 Problem Statement
-Avian species serve as critical bioindicators of ecosystem health. However, manual monitoring is labor-intensive, costly, and often prone to human error across vast Indian landscapes. 
-
-**PakshiAI** bridges this gap by providing an AI-driven, scalable solution. It transforms raw field captures (audio/images) into actionable intelligence, enabling:
-- **Rapid Biodiversity Assessment**: Identifying species in seconds, not hours.
-- **Digital Conservation Records**: Logging predictions with geospatial and habitat context.
-- **Public Engagement**: Making complex ornithological data accessible via a professional UI.
+## 📖 Strategic Overview
+- [Ecosystem Vision](#-ecosystem-vision)
+- [Production Architecture](#️-production-architecture)
+- [Neural Identification Hub](#-neural-identification-hub)
+- [Technical Specification](#-technical-specification)
+- [Deployment & Synchronization](#-deployment--synchronization)
+- [Field Research Guide](#-field-research-guide)
 
 ---
 
-## 🏗️ System Architecture
+## 🌍 Ecosystem Vision
+Avian species are the primary bioindicators of ecosystem health. PakshiAI automates the labor-intensive process of biodiversity auditing, enabling researchers to:
+- **Digitize Field Logs**: Automated species identification from raw audio and images.
+- **Trend Analysis**: Monitor population density and conservation status through real-time telemetry.
+- **Conservation Hardening**: Focus resources on high-priority species as identified by the latest **SoIB (State of India's Birds)** data.
 
-PakshiAI utilizes a **training-inference separation** strategy. While the research was conducted on an ~11GB dataset, the production environment is optimized for high-performance inference using serialized weights.
+---
+
+## 🏗️ Production Architecture
+
+PakshiAI operates on a **Decoupled Hybrid-Cloud** architecture, optimizing for both low-latency UI responsiveness and heavy neural inference.
 
 ```mermaid
 graph TD
-    subgraph "Frontend (React + Vite)"
-        UI[User Interface]
-        AH[Acoustic Hub]
-        VID[Visual ID]
-        CAT[Species Catalog]
+    subgraph "Public Interface (Netlify Edge)"
+        UI[React 19 Frontend]
+        STATE[Local Persistence / History]
     end
 
-    subgraph "Backend (FastAPI)"
-        API[Inference API]
-        PROC[Audio Processor / librosa]
-        CORE[Neural Core / CNN]
-        DB[(Production SQLite)]
+    subgraph "Neural Core (Railway Production)"
+        API[FastAPI Gateway]
+        PROC[Audio Processor / FFmpeg]
+        VC[Vision Engine / MobileNetV2]
+        AC[Acoustic Engine / STFT-CNN]
+        DB[(Asset Storage)]
     end
 
-    UI --> API
-    AH --> PROC
-    PROC --> CORE
-    VID --> CORE
-    CORE --> DB
-    CAT --> DB
+    UI -- "Gzipped JSON / Encrypted Payloads" --> API
+    API --> PROC
+    PROC -- "Mel-Spectrograms" --> AC
+    API -- "Feature Extraction" --> VC
+    AC & VC --> STATE
+    DB -- "Binary Media Stream (Zero-LFS)" --> UI
 ```
 
 ---
 
-## 🛠️ Technical Stack
+## 🚀 Neural Identification Hub
 
-### **Neural Core (Deep Learning)**
-- **Architecture**: Convolutional Neural Networks (CNN) optimized for spectral and pattern recognition.
-- **Inference**: PyTorch (CPU-Optimized).
-- **Processing**: Librosa (STFT, Mel-Spectrogram decomposition), NumPy, SciPy.
+### 🎧 Acoustic Synthesis Hub
+Analyzes bird calls via **Short-Time Fourier Transform (STFT)**. The engine identifies vocal signatures using deep spectral correlation across 31 endemic species.
+- **Segmented Analysis**: 30-second windowing for file stability.
+- **Neural Lazy-Loading**: Optimized 120s timeout protection.
+> ![Acoustic Hub](docs/acoustic.png)
 
-### **Backend (Intelligence Engine)**
-- **Framework**: FastAPI (High-performance Async Python).
-- **Database**: SQLAlchemy (ORM) + SQLite (Production-ready logging).
-- **Server**: Uvicorn / Gunicorn.
+### 📸 Visual Recognition Core
+Leverages **MobileNetV2** for plumage and anatomical descriptor extraction. 
+- **Fuzzy-Match Logic**: Robust nomenclature synchronization between neural labels and the species catalog.
+- **High-Fidelity Results**: Instant metadata retrieval for identified visual markers.
+> ![Visual ID Input](docs/visual_idip.png)
+> ![Visual ID Output](docs/visual_idop.png)
 
-### **Frontend (Research Interface)**
-- **Framework**: React 19 + Vite (Next-gen bundling).
-- **Styling**: TailwindCSS (Modern utility-first system).
-- **Animations**: Framer Motion (Smooth UI state transitions).
-- **Visualization**: Recharts & Lucide.
-
----
-
-## ✨ Features
-
-### 🎧 Acoustic Hub
-Neural spectral analysis of bird calls. Upload field recordings to decode vocal signatures with detailed confidence intervals.
-> *Placeholder: [Acoustic Hub Dashboard Screenshot]*
-
-### 📸 Visual ID
-State-of-the-art computer vision engine for identifying species from field captures, focusing on plumage patterns and anatomical markers.
-> *Placeholder: [Visual ID Results Screenshot]*
-
-### 📚 Species Catalog
-A comprehensive encyclopedia of 31+ verified Indian avian species, including scientific nomenclature, frequency ranges, and ecological context.
-> *Placeholder: [Species Catalog Screenshot]*
-
-### 📊 Real-time Monitoring & Dashboard
-Visual telemetry tracking biodiversity trends, detection activity, and geospatial distribution.
+### 📊 Insight Engine (Dashboard)
+Live telemetry visualizing biodiversity trends, regional detection hotspots, and IUCN conservation distribution.
+> ![Insights Engine](docs/insight_engine.png)
+> ![Trends Console](docs/species_index.png)
 
 ---
 
-## 🚀 Installation
+## 🛠️ Technical Specification
+
+### **Machine Learning Framework**
+- **Neural Core**: PyTorch (MobileNetV2 & Custom CNN Architectures).
+- **Signal Processing**: Librosa (Acoustic decomposition), NumPy, SciPy.
+- **Data Pipeline**: Binary-Asset-Sync (Bypassing Git LFS for production latency).
+
+### **Infrastructure & Backend**
+- **Gateway**: FastAPI (Async high-performance Python).
+- **Assets**: Optimized Static serving with cache-control headers.
+- **Database**: SQL-Alchemy ORM / SQLite for production logging.
+
+### **Frontend Research UI**
+- **Framework**: React 19 + Vite.
+- **Motion Engine**: Framer Motion for non-blocking UI transitions.
+- **Visualization**: Recharts for terminal-grade telemetry.
+
+---
+
+## 🔧 Field Research Guide (Local Setup)
 
 ### **Prerequisites**
-- **Python 3.10+** (Inference Core)
-- **Node.js 18+** (Interface)
-- **FFmpeg** (Required for spectral audio processing)
+- **Python 3.10+** & **Node.js 18+**
+- **FFmpeg** (Crucial for acoustic spectral analysis)
 
-### **Step-by-Step Setup**
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/bhoomika16-dev/PakshiAI.git
-   cd PakshiAI
-   ```
-
-2. **Backend Setup**
-   ```bash
-   # We recommend using the provided automated launcher
-   # but for manual setup:
-   pip install -r requirements.txt
-   ```
-
-3. **Frontend Setup**
-   ```bash
-   cd frontend
-   cp .env.example .env
-   npm install
-   ```
-
-### **Running the Project (Local Research Mode)**
-For a professional experience on Windows, simply double-click:
+### **Automated Deployment (Windows)**
+The project includes a unified launcher for instant local research:
 ```powershell
-start_local.bat
+./start_local.bat
 ```
-*This launches the API and UI concurrently with automated dependency synchronization.*
+*This command synchronizes neural weights, initializes the API core, and launches the research interface concurrently.*
+
+### **Manual Backend Initialization**
+```bash
+pip install -r requirements.txt
+python backend/app.py
+```
+
+### **Manual Frontend Initialization**
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ Global Synchronization
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `VITE_API_BASE_URL` | Link to the FastAPI Backend | `http://localhost:8000` |
-| `DATABASE_URL` | SQLAlchemy Connection String | `sqlite:///./pakshiai.db` |
-
-The backend handles all acoustic and visual analysis using serialized CNN weights. No login is required for field research.
+| Variable | Target | Deployment Environment |
+|----------|--------|------------------------|
+| `VITE_API_BASE_URL` | https://pakshiai-backend-production.up.railway.app | **Production Tier** |
+| `VITE_API_BASE_URL` | http://localhost:8000 | **Local Research** |
 
 ---
 
 ## 🗺️ Roadmap
-- [ ] **Mobile Integration**: Progressive Web App (PWA) for offline field use.
-- [ ] **Edge Deployment**: Porting CNN cores to TensorFlow Lite for ultra-low latency.
-- [ ] **Extended Repository**: Expanding to 100+ Western Ghats endemic species.
+- [x] **Railway Migration**: Production RAM stability (RESTORED).
+- [x] **Binary-Asset-Sync**: LFS-to-Blob conversion for zero-latency images.
+- [ ] **PWA Deployment**: Offline-first mobile field tool.
+- [ ] **Endemic expansion**: Support for 100+ Western Ghats endemics.
 
 ---
 
-## 🤝 Contributing
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create.
+## 🤝 Project Stewardship
+**Maintainer**: [Bhoomikha](https://github.com/bhoomika16-dev)  
+**Production Site**: [PakshiAI Live](https://pakshi-ai.netlify.app)
 
-1. **Fork** the Project
-2. Create your **Feature Branch** (`git checkout -b feature/AmazingFeature`)
-3. **Commit** your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a **Pull Request**
-
----
-
-## 📜 License
-Distributed under the **MIT License**. See `LICENSE` for more information.
-
----
-
-## 📞 Support & Contact
-**Project Maintainer**: [Bhoomikha](https://github.com/bhoomika16-dev)  
-**Project Link**: [https://github.com/bhoomika16-dev/PakshiAI](https://github.com/bhoomika16-dev/PakshiAI)  
-
-*For bug reports and feature requests, please use the [GitHub Issues](https://github.com/bhoomika16-dev/PakshiAI/issues) page.*
-
----
-**PakshiAI** - *Conservation through Intelligence*
+*Designed for Conservation through Intelligence.* 🦜🕊️🎊
