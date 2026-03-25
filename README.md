@@ -150,4 +150,5 @@ npm run dev
 **Maintainer**: [Bhoomikha](https://github.com/bhoomika16-dev)  
 **Production Site**: [PakshiAI Live](https://pakshi-ai.netlify.app)
 
+
 *Designed for Conservation through Intelligence.* 🦜🕊️🎊
